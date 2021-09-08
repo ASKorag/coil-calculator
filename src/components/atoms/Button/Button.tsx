@@ -1,8 +1,8 @@
 import React from 'react'
-import {IButtonProps} from 'types/atoms'
+import {TButtonProps} from 'types/atoms'
 import './Button.sass'
 
-export const Button: React.FC<IButtonProps> = ({text, mod}) => {
+export const Button: React.FC<TButtonProps> = ({text, mod}) => {
   if (mod === 'open') {
     return (
       <label className={`btn btn--${mod}`}>{text}
