@@ -5,8 +5,8 @@ export const MainPage = () => {
   return (
     <>
       <div className="main-page__wrap">
-        <Button text="New coil" mod="new"/>
-        <Button text="Open coil" mod="open"/>
+        <Button text="New coil" mod="new" href="/calc"/>
+        <Button text="Open coil" mod="open" />
       </div>
     </>
   )
