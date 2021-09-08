@@ -1,6 +1,23 @@
-.main-page__wrap
+@use '../../styles/colors'
+
+.main-page
+  height: 100%
+  width: 100%
   display: flex
-  justify-content: space-between
+  justify-content: center
   align-items: center
-  height: 300px
-  width: 500px
+  background-image: colors.$MAIN_GRAD
+  color: colors.$FONT_LIGHT
+
+  &__wrap
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: center
+    height: 80%
+    width: 80%
+
+  &__actions
+    width: 100%
+    display: flex
+    justify-content: space-evenly
