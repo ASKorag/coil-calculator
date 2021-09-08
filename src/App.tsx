@@ -1,12 +1,11 @@
-import React from 'react';
-import './App.css';
+import './App.sass'
+import {MainPage} from './pages/MainPage/MainPage'
+
 
 function App() {
   return (
-    <div className="App">
-      Coil Calculator
-    </div>
-  );
+ <MainPage />
+  )
 }
 
-export default App;
+export default App
