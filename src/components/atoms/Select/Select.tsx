@@ -1,5 +1,5 @@
 import React from 'react'
-import {TSelectProps} from 'types/atoms'
+import {TSelectProps} from 'types/props'
 
 import {getFixClass} from 'utils/utils'
 
