@@ -1,3 +1,5 @@
+import {TWire} from './states'
+
 export enum TCoilActionTypes {
   TOGGLE_FORM = 'TOGGLE_FORM',
   CHANGE_HEIGHT = 'CHANGE_HEIGHT',
@@ -21,6 +23,11 @@ export enum TTempActionTypes {
   CHANGE_OVERHEAT = 'CHANGE_OVERHEAT'
 }
 
+export enum TIndexesActionTypes {
+  CHANGE_WIRE_INDEX = 'CHANGE_WIRE_INDEX',
+  CHANGE_ISOLATION_INDEX = 'CHANGE_ISOLATION_INDEX'
+}
+
 export type TCoilAction = {
   type: TCoilActionTypes,
   value?: number
@@ -28,7 +35,7 @@ export type TCoilAction = {
 
 export type TWireAction = {
   type: TWireActionTypes,
-  value: number
+  value: number | TWire
 }
 
 export type TSupplyAction = {
@@ -41,10 +48,8 @@ export type TTempAction = {
   value: number
 }
 
-export type TToggleAction = {
-  type: string
-}
 
-export type TAction = TToggleAction & {
-  value?: number
+export type TIndexesAction = {
+  type: TIndexesActionTypes,
+  value: number
 }

@@ -26,3 +26,8 @@ export type TSupply = {
 export type TTemp = {
   overheat: number
 }
+
+export type TIndexes = {
+  wireIndex: number,
+  isolationIndex: number
+}
