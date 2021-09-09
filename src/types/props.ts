@@ -1,5 +1,8 @@
+import React from 'react'
 import {ButtonHTMLAttributes, HTMLAttributes, OptionHTMLAttributes, SelectHTMLAttributes} from 'react'
 import {TWiresBase} from './wires'
+import {TCoil, TSupply, TTemp, TWire} from './states'
+import {TAction, TCoilAction, TSupplyAction, TTempAction, TToggleAction, TWireAction} from './actions'
 
 export type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string,
@@ -14,9 +17,23 @@ export type TOptionProps = OptionHTMLAttributes<HTMLOptionElement> & {
 export type TSelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
   text: string,
   mod: string,
-  options: TOptionProps[]
+  options: TOptionProps[],
+  handler: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
+
 export type TCalcPageProps = HTMLAttributes<HTMLDivElement> & {
-  wires: TWiresBase
+  wires: TWiresBase,
+  states: {
+    wire: TWire,
+    coil: TCoil,
+    supply: TSupply,
+    temp: TTemp
+  },
+  dispatchers: {
+    setWire: React.Dispatch<TWireAction>
+    setCoil: React.Dispatch<TCoilAction>
+    setSupply: React.Dispatch<TSupplyAction>
+    setTemp: React.Dispatch<TTempAction>
+  }
 }
