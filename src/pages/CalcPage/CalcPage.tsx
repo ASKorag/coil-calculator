@@ -2,9 +2,10 @@ import React from 'react'
 import './CalcPage.sass'
 import {Select} from 'components/atoms/Select/Select'
 import {TCalcPageProps} from 'types/props'
-import {TWireActionTypes} from 'types/actions'
+import {TCoilActionTypes, TWireActionTypes} from 'types/actions'
 import {TWireBase} from 'types/wires'
 import {TWire} from 'types/states'
+import {Field} from '../../components/atoms/Field/Field'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
   const {wire, coil, temp, supply,} = states
@@ -33,6 +34,23 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
       setWire({type: TWireActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiams[index]})
     }
   }
+
+  function handlerInput(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value
+    const id = event.target.id
+    const [stateName, stateProp] = id.split('-')
+    if (stateName === 'coil') {
+      if (stateProp === 'height') {
+        setCoil({type: TCoilActionTypes.CHANGE_HEIGHT, value: +value},)
+      }
+      if (stateProp === 'thickness') {
+        setCoil({type: TCoilActionTypes.CHANGE_THICK, value: +value})
+      }
+      if (stateProp === 'innerDiam') {
+        setCoil({type: TCoilActionTypes.CHANGE_INNER_DIAM, value: +value})
+      }
+    }
+  }
   return (
     <div className="calc-page page">
       <div>
@@ -48,6 +66,11 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                 value={wire.nomDiam}/>
         <Select text="Isolation " mod="isol" name="isol" options={wireMaxDiams}
                 handler={handlerSelect} value={wire.maxDiam}/>
+        <div className="calc-page__coil coil">
+          <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
+          <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
+          <Field mod="inner-diam" text="Coil inner diam" handler={handlerInput} id="coil-innerDiam" value={coil.innerDiam}/>
+        </div>
       </div>
     </div>
   )

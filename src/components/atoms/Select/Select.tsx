@@ -8,7 +8,7 @@ export const Select: React.FC<TSelectProps> = ({text, options, mod, name, handle
   return (
     <div className={_('select')}>
       <label className={_('select__label')}>{text}</label>
-      <select className={_('select__list')} name={name} onChange={event => handler(event)} value={value}>
+      <select className={_('select__list')} name={name} onChange={handler} value={value}>
         {options.map(({value, text}, index) => {
           return <option className={_('select__option')} value={value} key={index}>{text ?? value}</option>
         })}

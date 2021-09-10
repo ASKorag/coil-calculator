@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {InputHTMLAttributes} from 'react'
 import {ButtonHTMLAttributes, HTMLAttributes, OptionHTMLAttributes, SelectHTMLAttributes} from 'react'
 import {TWiresBase} from './wires'
 import {TCoil, TSupply, TTemp, TWire} from './states'
@@ -35,4 +35,10 @@ export type TCalcPageProps = HTMLAttributes<HTMLDivElement> & {
     setSupply: React.Dispatch<TSupplyAction>
     setTemp: React.Dispatch<TTempAction>
   }
+}
+
+export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
+  text: string,
+  mod: string,
+  handler: (event: React.FocusEvent<HTMLInputElement>) => void
 }

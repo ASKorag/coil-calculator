@@ -12,9 +12,9 @@ export const initWireState: TWire = {
 
 export const initCoilState: TCoil = {
   isRound: true,
-  innerDiam: 0,
-  thickness: 0,
-  height: 0
+  innerDiam: 20,
+  thickness: 16.5,
+  height: 45
 }
 
 export const initSupplyState: TSupply = {
