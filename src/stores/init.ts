@@ -18,11 +18,12 @@ export const initCoilState: TCoil = {
 }
 
 export const initSupplyState: TSupply = {
-  holdVoltage: 0,
   isForcing: false,
+  holdVoltage: 200,
+  forceVoltage: 250,
   ratioVoltageDrop: 0.9
 }
 
 export const initTempState: TTemp = {
-  overheat: 0
+  overheat: 80
 }

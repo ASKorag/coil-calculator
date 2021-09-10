@@ -1,7 +1,8 @@
 import React from 'react'
 import {TSelectProps} from 'types/props'
-
 import {getFixClass} from 'utils/utils'
+
+import './Select.sass'
 
 export const Select: React.FC<TSelectProps> = ({text, options, mod, name, handler, value}) => {
   const _ = getFixClass(mod)

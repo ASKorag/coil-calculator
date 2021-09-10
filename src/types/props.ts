@@ -42,3 +42,8 @@ export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   mod: string,
   handler: (event: React.FocusEvent<HTMLInputElement>) => void
 }
+
+export type TGroupProps = HTMLAttributes<HTMLDivElement> & {
+  text: string
+  mod: string
+}
