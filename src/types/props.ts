@@ -47,3 +47,9 @@ export type TGroupProps = HTMLAttributes<HTMLDivElement> & {
   text: string
   mod: string
 }
+
+export type TCheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
+  text: string,
+  mod: string,
+  handler: (event: React.ChangeEvent<HTMLInputElement>) => void
+}

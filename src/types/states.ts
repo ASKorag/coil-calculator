@@ -14,7 +14,7 @@ export type TCoil = {
 
 export type TSupply = {
   holdVoltage: number,
-  isForcing: boolean,
+  isForce: boolean,
   forceVoltage?: number,
   ratioVoltageDrop: number,
 }

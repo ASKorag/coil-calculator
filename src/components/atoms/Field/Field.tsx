@@ -4,7 +4,7 @@ import {getFixClass} from '../../../utils/utils'
 
 import './Field.sass'
 
-export const Field: React.FC<TFieldProps> = ({text, id, mod, value, handler}) => {
+export const Field: React.FC<TFieldProps> = ({text, id, mod, disabled, value, handler}) => {
   const _ = getFixClass(mod)
   return (
     <div className={_('field')}>
@@ -14,8 +14,8 @@ export const Field: React.FC<TFieldProps> = ({text, id, mod, value, handler}) =>
              step="0.1"
              id={id}
              value={value}
+             disabled={disabled}
              onChange={handler}
-             onBlur={() => console.log('Boom')}
              />
     </div>
   )

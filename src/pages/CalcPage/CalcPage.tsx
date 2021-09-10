@@ -2,11 +2,12 @@ import React from 'react'
 import './CalcPage.sass'
 import {Select} from 'components/atoms/Select/Select'
 import {TCalcPageProps} from 'types/props'
-import {TCoilActionTypes, TWireActionTypes} from 'types/actions'
+import {TCoilActionTypes, TSupplyActionTypes, TTempActionTypes, TWireActionTypes} from 'types/actions'
 import {TWireBase} from 'types/wires'
 import {TWire} from 'types/states'
 import {Field} from '../../components/atoms/Field/Field'
 import {Group} from '../../components/molecules/Group/Group'
+import {Checkbox} from '../../components/atoms/Checkbox/Checkbox'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
   const {wire, coil, temp, supply,} = states
@@ -40,16 +41,57 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     const value = event.target.value
     const id = event.target.id
     const [stateName, stateProp] = id.split('-')
+    switch (stateName) {
+      case 'coil':
+        changeCoil(stateProp, +value)
+        break
+      case 'supply':
+        changeSupply(stateProp, +value)
+        break
+      case 'temp':
+        changeTemp(stateProp, +value)
+        break
+    }
+  }
+
+  function changeCoil(stateProp: string, value: number): void {
+    if (stateProp === 'height') {
+      setCoil({type: TCoilActionTypes.CHANGE_HEIGHT, value})
+    }
+    if (stateProp === 'thickness') {
+      setCoil({type: TCoilActionTypes.CHANGE_THICK, value})
+    }
+    if (stateProp === 'innerDiam') {
+      setCoil({type: TCoilActionTypes.CHANGE_INNER_DIAM, value})
+    }
+  }
+
+  function changeSupply(stateProp: string, value: number): void {
+    if (stateProp === 'holdVoltage') {
+      setSupply({type: TSupplyActionTypes.CHANGE_HOLD_VOLTAGE, value})
+    }
+    if (stateProp === 'forceVoltage') {
+      setSupply({type: TSupplyActionTypes.CHANGE_FORCE_VOLTAGE, value})
+    }
+    if (stateProp === 'ratioVoltageDrop') {
+      setSupply({type: TSupplyActionTypes.CHANGE_RATIO_VOLTAGE_DROP, value})
+    }
+  }
+
+  function changeTemp(stateProp: string, value: number): void {
+    if (stateProp === 'overheat') {
+      setTemp({type: TTempActionTypes.CHANGE_OVERHEAT, value})
+    }
+  }
+
+  function handlerCheck(event: React.ChangeEvent<HTMLInputElement>) {
+    const id = event.target.id
+    const [stateName, stateProp] = id.split('-')
     if (stateName === 'coil') {
-      if (stateProp === 'height') {
-        setCoil({type: TCoilActionTypes.CHANGE_HEIGHT, value: +value},)
-      }
-      if (stateProp === 'thickness') {
-        setCoil({type: TCoilActionTypes.CHANGE_THICK, value: +value})
-      }
-      if (stateProp === 'innerDiam') {
-        setCoil({type: TCoilActionTypes.CHANGE_INNER_DIAM, value: +value})
-      }
+      setCoil({type: TCoilActionTypes.TOGGLE_FORM})
+    }
+    if (stateName === 'supply') {
+      setSupply({type: TSupplyActionTypes.TOGGLE_FORCE})
     }
   }
 
@@ -63,6 +105,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                 handler={handlerSelect} value={wire.maxDiam}/>
       </Group>
       <Group text="Coil" mod="coil">
+        <Checkbox text="Round coil?" mod="is-round" id="coil-isRound" checked={coil.isRound} handler={handlerCheck}/>
         <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
         <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
         <Field mod="inner-diam"
@@ -77,10 +120,12 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                mod="hold-voltage"
                value={supply.holdVoltage}
                handler={handlerInput}/>
+        <Checkbox text="Force voltage?" mod="is-force" id="supply-isForce" checked={supply.isForce} handler={handlerCheck}/>
         <Field text="Force voltage"
                id="supply-forceVoltage"
                mod="force-voltage"
                value={supply.forceVoltage}
+               disabled={!supply.isForce}
                handler={handlerInput}/>
         <Field text="Ratio voltage drop"
                id="supply-ratioVoltageDrop"

@@ -39,7 +39,7 @@ export function coilReducer(state: TCoil, {type, value}: TCoilAction) {
 export function supplyReducer(state: TSupply, {type, value}: TSupplyAction) {
   switch (type) {
     case TSupplyActionTypes.TOGGLE_FORCE:
-      return {...state, isForcing: !state.isForcing}
+      return {...state, isForce: !state.isForce}
     case TSupplyActionTypes.CHANGE_FORCE_VOLTAGE:
       return value ? {...state, forceVoltage: value} : state
     case TSupplyActionTypes.CHANGE_HOLD_VOLTAGE:

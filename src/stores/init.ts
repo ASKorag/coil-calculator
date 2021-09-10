@@ -18,7 +18,7 @@ export const initCoilState: TCoil = {
 }
 
 export const initSupplyState: TSupply = {
-  isForcing: false,
+  isForce: false,
   holdVoltage: 200,
   forceVoltage: 250,
   ratioVoltageDrop: 0.9
