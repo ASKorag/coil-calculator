@@ -1,9 +1,7 @@
-import {TCoil, TIndexes, TSupply, TTemp, TWire} from '../types/states'
+import {TCoil, TSupply, TTemp, TWire,} from 'types/states'
 import {
   TCoilAction,
   TCoilActionTypes,
-  TIndexesAction,
-  TIndexesActionTypes,
   TSupplyAction,
   TSupplyActionTypes,
   TTempAction,
@@ -14,10 +12,10 @@ import {
 
 export function wireReducer(state: TWire, {type, value}: TWireAction) {
   switch (type) {
-    case TWireActionTypes.CHANGE_ISOLATION:
-      return typeof value === 'number' ? {...state, maxDiam: value} : state
     case TWireActionTypes.CHANGE_WIRE:
       return typeof value !== 'number' ? value : state
+    case TWireActionTypes.CHANGE_ISOLATION:
+      return typeof value === 'number' ? {...state, maxDiam: value} : state
     default:
       return state
   }
@@ -32,7 +30,7 @@ export function coilReducer(state: TCoil, {type, value}: TCoilAction) {
     case TCoilActionTypes.CHANGE_INNER_DIAM:
       return value ? {...state, innerDiam: value} : state
     case TCoilActionTypes.CHANGE_THICK:
-      return value ? {...state, thickness:value} : state
+      return value ? {...state, thickness: value} : state
     default:
       return state
   }
@@ -59,17 +57,5 @@ export function tempReducer(state: TTemp, {type, value}: TTempAction) {
       return {...state, overheat: value}
     default:
       return state
-  }
-}
-
-export function indexesReducer(state: TIndexes, {type, value}: TIndexesAction) {
-  switch (type) {
-    case TIndexesActionTypes.CHANGE_WIRE_INDEX:
-      return {...state, wireIndex: value}
-    case TIndexesActionTypes.CHANGE_ISOLATION_INDEX:
-      return {...state, isolationIndex: value}
-    default:
-      return state
-
   }
 }

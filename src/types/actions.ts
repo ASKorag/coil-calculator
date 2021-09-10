@@ -23,11 +23,6 @@ export enum TTempActionTypes {
   CHANGE_OVERHEAT = 'CHANGE_OVERHEAT'
 }
 
-export enum TIndexesActionTypes {
-  CHANGE_WIRE_INDEX = 'CHANGE_WIRE_INDEX',
-  CHANGE_ISOLATION_INDEX = 'CHANGE_ISOLATION_INDEX'
-}
-
 export type TCoilAction = {
   type: TCoilActionTypes,
   value?: number
@@ -45,11 +40,5 @@ export type TSupplyAction = {
 
 export type TTempAction = {
   type: TTempActionTypes,
-  value: number
-}
-
-
-export type TIndexesAction = {
-  type: TIndexesActionTypes,
   value: number
 }

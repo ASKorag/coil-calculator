@@ -2,11 +2,7 @@ export type TWire = {
   nomDiam: number,
   maxDiam: number,
   weight1km: number,
-  resist1m: {
-    minResist: number | null,
-    nomResist: number,
-    maxResist: number | null,
-  },
+  resists1m: Array<number | null>
 }
 
 export type TCoil = {
@@ -25,9 +21,4 @@ export type TSupply = {
 
 export type TTemp = {
   overheat: number
-}
-
-export type TIndexes = {
-  wireIndex: number,
-  isolationIndex: number
 }

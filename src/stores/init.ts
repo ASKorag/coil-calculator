@@ -1,24 +1,13 @@
-import {TCoil, TIndexes, TSupply, TTemp, TWire} from '../types/states'
+import {TCoil, TSupply, TTemp, TWire} from '../types/states'
 import {TY_027} from '../wires/TY_027'
 
-export const initIndexesState: TIndexes = {
-  wireIndex: 0,
-  isolationIndex: 1
-}
-
-const initWire = TY_027[initIndexesState.wireIndex]
-type isolationTypes = 'type1' | 'type2' | 'type3'
-const a = `type${initIndexesState.isolationIndex}` as isolationTypes
+const initWire = TY_027[0]
 
 export const initWireState: TWire = {
   nomDiam: initWire.nomDiam,
-  maxDiam: initWire.maxDiam[a],
+  maxDiam: initWire.maxDiams[1],
   weight1km: initWire.weight1km,
-  resist1m: {
-    minResist: initWire.resist1m.minResist,
-    nomResist: initWire.resist1m.nomResist,
-    maxResist: initWire.resist1m.maxResist,
-  }
+  resists1m: initWire.resists1m
 }
 
 export const initCoilState: TCoil = {
