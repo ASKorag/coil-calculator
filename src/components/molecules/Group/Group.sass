@@ -1,7 +1,17 @@
+@use '../../../styles/colors'
+
 .group
   border: 1px solid black
   margin: 10px
+  min-width: 240px
+  display: flex
+  flex-direction: column
+  justify-content: space-between
 
   &__title
+    width: 100%
+    display: block
+    background-color: colors.$ELEM_MAIN
+    color: colors.$FONT_LIGHT
     margin: 0
     text-align: center

@@ -1,6 +1,7 @@
 import {useReducer} from 'react'
 import {Route} from 'react-router-dom'
 import './App.sass'
+import 'normalize.css'
 import {MainPage} from 'pages/MainPage/MainPage'
 import {CalcPage} from 'pages/CalcPage/CalcPage'
 

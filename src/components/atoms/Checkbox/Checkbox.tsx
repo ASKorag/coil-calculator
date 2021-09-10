@@ -2,6 +2,8 @@ import React from 'react'
 import {TCheckboxProps} from '../../../types/props'
 import {getFixClass} from '../../../utils/utils'
 
+import './Checkbox.sass'
+
 export const Checkbox: React.FC<TCheckboxProps> = ({text, id, mod, handler, checked}) => {
   const _ = getFixClass(mod)
   return (

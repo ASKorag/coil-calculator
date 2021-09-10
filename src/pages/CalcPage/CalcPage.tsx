@@ -97,49 +97,55 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
 
   return (
     <div className="calc-page page">
+      <div className="calc-page__wrap wrap">
 
-      <Group text="Wire" mod="wire">
-        <Select text="Nom. diameter" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
-                value={wire.nomDiam}/>
-        <Select text="Isolation " mod="isol" name="isol" options={wireMaxDiams}
-                handler={handlerSelect} value={wire.maxDiam}/>
-      </Group>
-      <Group text="Coil" mod="coil">
-        <Checkbox text="Round coil?" mod="is-round" id="coil-isRound" checked={coil.isRound} handler={handlerCheck}/>
-        <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
-        <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
-        <Field mod="inner-diam"
-               text="Coil inner diam"
-               handler={handlerInput}
-               id="coil-innerDiam"
-               value={coil.innerDiam}/>
-      </Group>
-      <Group text="Supply" mod="supply">
-        <Field text="Hold voltage"
-               id="supply-holdVoltage"
-               mod="hold-voltage"
-               value={supply.holdVoltage}
-               handler={handlerInput}/>
-        <Checkbox text="Force voltage?" mod="is-force" id="supply-isForce" checked={supply.isForce} handler={handlerCheck}/>
-        <Field text="Force voltage"
-               id="supply-forceVoltage"
-               mod="force-voltage"
-               value={supply.forceVoltage}
-               disabled={!supply.isForce}
-               handler={handlerInput}/>
-        <Field text="Ratio voltage drop"
-               id="supply-ratioVoltageDrop"
-               mod="ratio-voltage-drop"
-               value={supply.ratioVoltageDrop}
-               handler={handlerInput}/>
-      </Group>
-      <Group text="Temperature" mod="temp">
-        <Field text="Overheat"
-               id="temp-overheat"
-               mod="overheat"
-               value={temp.overheat}
-               handler={handlerInput}/>
-      </Group>
+        <Group text="Wire" mod="wire">
+          <Select text="Nom. diameter" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
+                  value={wire.nomDiam}/>
+          <Select text="Isolation " mod="isol" name="isol" options={wireMaxDiams}
+                  handler={handlerSelect} value={wire.maxDiam}/>
+        </Group>
+        <Group text="Coil" mod="coil">
+          <Checkbox text="Round coil?" mod="is-round" id="coil-isRound" checked={coil.isRound} handler={handlerCheck}/>
+          <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
+          <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
+          <Field mod="inner-diam"
+                 text="Coil inner diam"
+                 handler={handlerInput}
+                 id="coil-innerDiam"
+                 value={coil.innerDiam}/>
+        </Group>
+        <Group text="Supply" mod="supply">
+          <Field text="Hold voltage"
+                 id="supply-holdVoltage"
+                 mod="hold-voltage"
+                 value={supply.holdVoltage}
+                 handler={handlerInput}/>
+          <Checkbox text="Force voltage?"
+                    mod="is-force"
+                    id="supply-isForce"
+                    checked={supply.isForce}
+                    handler={handlerCheck}/>
+          <Field text="Force voltage"
+                 id="supply-forceVoltage"
+                 mod="force-voltage"
+                 value={supply.forceVoltage}
+                 disabled={!supply.isForce}
+                 handler={handlerInput}/>
+          <Field text="Ratio voltage drop"
+                 id="supply-ratioVoltageDrop"
+                 mod="ratio-voltage-drop"
+                 value={supply.ratioVoltageDrop}
+                 handler={handlerInput}/>
+        </Group>
+        <Group text="Temperature" mod="temp">
+          <Field text="Overheat"
+                 id="temp-overheat"
+                 mod="overheat"
+                 value={temp.overheat}
+                 handler={handlerInput}/>
+        </Group>
+      </div>
     </div>
   )
 }
