@@ -24,3 +24,26 @@ export type TSupply = {
 export type TTemp = {
   overheat: number
 }
+
+type TNumbArr = Array<number | null>
+
+type TElectricParam = {
+  currents: Array<TNumbArr>,
+  mmf: Array<TNumbArr>,
+  currentDensity: Array<TNumbArr>
+}
+
+type TGenElectricParam<T> = {
+  withoutOverheat: T,
+  withOverheat: T
+}
+
+export type TFinalData = {
+  coil: {
+    height: number,
+    thick: number,
+  },
+  resists: TGenElectricParam<TNumbArr>,
+  withHoldVoltage: TGenElectricParam<TElectricParam>,
+  withForceVoltage: TGenElectricParam<TElectricParam>
+}

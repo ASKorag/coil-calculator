@@ -1,4 +1,4 @@
-import {TCoil, TSupply, TTemp, TWire,} from 'types/states'
+import {TCoil, TFinalData, TSupply, TTemp, TWire,} from 'types/states'
 import {
   TCoilAction,
   TCoilActionTypes,
@@ -58,4 +58,8 @@ export function tempReducer(state: TTemp, {type, value}: TTempAction) {
     default:
       return state
   }
+}
+
+export const finalDataReducer = (state: TFinalData, action: {type: string}): TFinalData => {
+  return state
 }

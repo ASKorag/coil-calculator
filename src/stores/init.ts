@@ -1,4 +1,4 @@
-import {TCoil, TSupply, TTemp, TWire} from '../types/states'
+import {TCoil, TFinalData, TSupply, TTemp, TWire} from '../types/states'
 import {TY_027} from '../wires/TY_027'
 
 const initWire = TY_027[0]
@@ -26,4 +26,39 @@ export const initSupplyState: TSupply = {
 
 export const initTempState: TTemp = {
   overheat: 80
+}
+
+export const initFinalData: TFinalData = {
+  coil: {
+    height: 0,
+    thick: 0
+  },
+  resists: {
+    withOverheat: [0],
+    withoutOverheat: [0]
+  },
+  withHoldVoltage: {
+    withoutOverheat: {
+      currents: [[0], [0], [0]],
+      mmf: [[0], [0], [0]],
+      currentDensity: [[0], [0], [0]],
+    },
+    withOverheat: {
+      currents: [[0], [0], [0]],
+      mmf: [[0], [0], [0]],
+      currentDensity: [[0], [0], [0]],
+    }
+  },
+  withForceVoltage: {
+    withoutOverheat: {
+      currents: [[0], [0], [0]],
+      mmf: [[0], [0], [0]],
+      currentDensity: [[0], [0], [0]],
+    },
+    withOverheat: {
+      currents: [[0], [0], [0]],
+      mmf: [[0], [0], [0]],
+      currentDensity: [[0], [0], [0]],
+    },
+  }
 }
