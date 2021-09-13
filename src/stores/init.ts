@@ -11,7 +11,7 @@ export const initWireState: TWire = {
 }
 
 export const initCoilState: TCoil = {
-  isRound: true,
+  shape: 'round',
   innerDiam: 20,
   thickness: 16.5,
   height: 45
@@ -21,7 +21,7 @@ export const initSupplyState: TSupply = {
   isForce: false,
   holdVoltage: 200,
   forceVoltage: 250,
-  ratioVoltageDrop: 0.9
+  voltageDev: 10,
 }
 
 export const initTempState: TTemp = {

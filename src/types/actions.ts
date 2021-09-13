@@ -1,7 +1,7 @@
 import {TWire} from './states'
 
 export enum TCoilActionTypes {
-  TOGGLE_FORM = 'TOGGLE_FORM',
+  CHANGE_SHAPE = 'CHANGE_SHAPE',
   CHANGE_HEIGHT = 'CHANGE_HEIGHT',
   CHANGE_THICK = 'CHANGE_THICK',
   CHANGE_INNER_DIAM = 'CHANGE_INNER_DIAM'
@@ -16,7 +16,7 @@ export enum TSupplyActionTypes {
   TOGGLE_FORCE = 'TOGGLE_FORCE',
   CHANGE_HOLD_VOLTAGE = 'CHANGE_HOLD_VOLTAGE',
   CHANGE_FORCE_VOLTAGE = 'CHANGE_FORCE_VOLTAGE',
-  CHANGE_RATIO_VOLTAGE_DROP = 'CHANGE_RATIO_VOLTAGE_DROP',
+  CHANGE_VOLTAGE_DEV = 'CHANGE_VOLTAGE_DEV',
 }
 
 export enum TTempActionTypes {
@@ -25,7 +25,7 @@ export enum TTempActionTypes {
 
 export type TCoilAction = {
   type: TCoilActionTypes,
-  value?: number
+  value: number | 'round' | 'random'
 }
 
 export type TWireAction = {

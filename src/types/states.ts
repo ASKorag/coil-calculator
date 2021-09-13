@@ -5,8 +5,10 @@ export type TWire = {
   resists1m: Array<number | null>
 }
 
+export type TCoilShape = 'round' | 'random'
+
 export type TCoil = {
-  isRound: boolean,
+  shape: TCoilShape,
   height: number,
   thickness: number,
   innerDiam: number,
@@ -16,7 +18,7 @@ export type TSupply = {
   holdVoltage: number,
   isForce: boolean,
   forceVoltage?: number,
-  ratioVoltageDrop: number,
+  voltageDev: number,
 }
 
 export type TTemp = {

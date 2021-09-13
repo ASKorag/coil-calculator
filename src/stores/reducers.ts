@@ -23,14 +23,14 @@ export function wireReducer(state: TWire, {type, value}: TWireAction) {
 
 export function coilReducer(state: TCoil, {type, value}: TCoilAction) {
   switch (type) {
-    case TCoilActionTypes.TOGGLE_FORM:
-      return {...state, isRound: !state.isRound}
+    case TCoilActionTypes.CHANGE_SHAPE:
+      return value === 'round' || value === 'random' ? {...state, shape: value} : state
     case TCoilActionTypes.CHANGE_HEIGHT:
-      return value ? {...state, height: value} : state
+      return typeof value === 'number' ? {...state, height: value} : state
     case TCoilActionTypes.CHANGE_INNER_DIAM:
-      return value ? {...state, innerDiam: value} : state
+      return typeof value === 'number' ? {...state, innerDiam: value} : state
     case TCoilActionTypes.CHANGE_THICK:
-      return value ? {...state, thickness: value} : state
+      return typeof value === 'number' ? {...state, thickness: value} : state
     default:
       return state
   }
@@ -44,8 +44,8 @@ export function supplyReducer(state: TSupply, {type, value}: TSupplyAction) {
       return value ? {...state, forceVoltage: value} : state
     case TSupplyActionTypes.CHANGE_HOLD_VOLTAGE:
       return value ? {...state, holdVoltage: value} : state
-    case TSupplyActionTypes.CHANGE_RATIO_VOLTAGE_DROP:
-      return value ? {...state, ratioVoltageDrop: value} : state
+    case TSupplyActionTypes.CHANGE_VOLTAGE_DEV:
+      return value ? {...state, voltageDev: value} : state
     default:
       return state
   }

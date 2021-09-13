@@ -35,6 +35,13 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     if (name === 'isol') {
       setWire({type: TWireActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiams[index]})
     }
+    if (name === 'shape') {
+      const value = event.target.value
+      if (value === 'round' || value === 'random') {
+
+      setCoil({type: TCoilActionTypes.CHANGE_SHAPE, value})
+      }
+    }
   }
 
   function handlerInput(event: React.ChangeEvent<HTMLInputElement>) {
@@ -73,8 +80,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     if (stateProp === 'forceVoltage') {
       setSupply({type: TSupplyActionTypes.CHANGE_FORCE_VOLTAGE, value})
     }
-    if (stateProp === 'ratioVoltageDrop') {
-      setSupply({type: TSupplyActionTypes.CHANGE_RATIO_VOLTAGE_DROP, value})
+    if (stateProp === 'voltageDev') {
+      setSupply({type: TSupplyActionTypes.CHANGE_VOLTAGE_DEV, value})
     }
   }
 
@@ -87,9 +94,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   function handlerCheck(event: React.ChangeEvent<HTMLInputElement>) {
     const id = event.target.id
     const [stateName, stateProp] = id.split('-')
-    if (stateName === 'coil') {
-      setCoil({type: TCoilActionTypes.TOGGLE_FORM})
-    }
+
     if (stateName === 'supply') {
       setSupply({type: TSupplyActionTypes.TOGGLE_FORCE})
     }
@@ -106,7 +111,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
         <Group text="Coil" mod="coil">
-          <Checkbox text="Round coil?" mod="is-round" id="coil-isRound" checked={coil.isRound} handler={handlerCheck}/>
+          <Select text="Shape of coil" mod="shape" name="shape" options={[{value: 'round'}, {value: 'random'}]} handler={handlerSelect}
+                  value={coil.shape}/>
           <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
           <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
           <Field mod="inner-diam"
@@ -132,10 +138,10 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={supply.forceVoltage}
                  disabled={!supply.isForce}
                  handler={handlerInput}/>
-          <Field text="Ratio voltage drop"
-                 id="supply-ratioVoltageDrop"
-                 mod="ratio-voltage-drop"
-                 value={supply.ratioVoltageDrop}
+          <Field text="Voltage deviation"
+                 id="supply-voltageDev"
+                 mod="voltage-dev"
+                 value={supply.voltageDev}
                  handler={handlerInput}/>
         </Group>
         <Group text="Temperature" mod="temp">
