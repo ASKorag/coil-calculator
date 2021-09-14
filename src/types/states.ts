@@ -9,9 +9,11 @@ export type TCoilShape = 'round' | 'random'
 
 export type TCoil = {
   shape: TCoilShape,
-  height: number,
-  thickness: number,
+  isFrame: boolean,
+  maxHeight: number,
+  maxThick: number,
   innerDiam: number,
+  turns: number
 }
 
 export type TSupply = {
@@ -42,6 +44,7 @@ export type TFinalData = {
   coil: {
     height: number,
     thick: number,
+
   },
   resists: TGenElectricParam<TNumbArr>,
   withHoldVoltage: TGenElectricParam<TElectricParam>,

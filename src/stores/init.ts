@@ -12,9 +12,11 @@ export const initWireState: TWire = {
 
 export const initCoilState: TCoil = {
   shape: 'round',
+  isFrame: true,
+  maxHeight: 45,
+  maxThick: 16.5,
   innerDiam: 20,
-  thickness: 16.5,
-  height: 45
+  turns: 1000
 }
 
 export const initSupplyState: TSupply = {

@@ -2,9 +2,11 @@ import {TWire} from './states'
 
 export enum TCoilActionTypes {
   CHANGE_SHAPE = 'CHANGE_SHAPE',
-  CHANGE_HEIGHT = 'CHANGE_HEIGHT',
-  CHANGE_THICK = 'CHANGE_THICK',
-  CHANGE_INNER_DIAM = 'CHANGE_INNER_DIAM'
+  TOGGLE_TYPE = 'TOGGLE_TYPE',
+  CHANGE_MAX_HEIGHT = 'CHANGE_MAX_HEIGHT',
+  CHANGE_MAX_THICK = 'CHANGE_MAX_THICK',
+  CHANGE_INNER_DIAM = 'CHANGE_INNER_DIAM',
+  CHANGE_TURNS = 'CHANGE_TURNS'
 }
 
 export enum TWireActionTypes {
@@ -25,7 +27,7 @@ export enum TTempActionTypes {
 
 export type TCoilAction = {
   type: TCoilActionTypes,
-  value: number | 'round' | 'random'
+  value?: number | 'round' | 'random'
 }
 
 export type TWireAction = {

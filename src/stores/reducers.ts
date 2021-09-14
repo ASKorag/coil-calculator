@@ -25,12 +25,16 @@ export function coilReducer(state: TCoil, {type, value}: TCoilAction) {
   switch (type) {
     case TCoilActionTypes.CHANGE_SHAPE:
       return value === 'round' || value === 'random' ? {...state, shape: value} : state
-    case TCoilActionTypes.CHANGE_HEIGHT:
-      return typeof value === 'number' ? {...state, height: value} : state
+    case TCoilActionTypes.TOGGLE_TYPE:
+      return {...state, isFrame: !state.isFrame}
+    case TCoilActionTypes.CHANGE_MAX_HEIGHT:
+      return typeof value === 'number' ? {...state, maxHeight: value} : state
     case TCoilActionTypes.CHANGE_INNER_DIAM:
       return typeof value === 'number' ? {...state, innerDiam: value} : state
-    case TCoilActionTypes.CHANGE_THICK:
-      return typeof value === 'number' ? {...state, thickness: value} : state
+    case TCoilActionTypes.CHANGE_MAX_THICK:
+      return typeof value === 'number' ? {...state, maxThick: value} : state
+    case TCoilActionTypes.CHANGE_TURNS:
+      return typeof  value === 'number' ? {...state, turns: value} : state
     default:
       return state
   }

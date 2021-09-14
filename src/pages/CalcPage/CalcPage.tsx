@@ -62,14 +62,17 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   }
 
   function changeCoil(stateProp: string, value: number): void {
-    if (stateProp === 'height') {
-      setCoil({type: TCoilActionTypes.CHANGE_HEIGHT, value})
+    if (stateProp === 'maxHeight') {
+      setCoil({type: TCoilActionTypes.CHANGE_MAX_HEIGHT, value})
     }
-    if (stateProp === 'thickness') {
-      setCoil({type: TCoilActionTypes.CHANGE_THICK, value})
+    if (stateProp === 'maxThick') {
+      setCoil({type: TCoilActionTypes.CHANGE_MAX_THICK, value})
     }
     if (stateProp === 'innerDiam') {
       setCoil({type: TCoilActionTypes.CHANGE_INNER_DIAM, value})
+    }
+    if (stateProp === 'turns') {
+      setCoil({type: TCoilActionTypes.CHANGE_TURNS, value})
     }
   }
 
@@ -98,12 +101,14 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     if (stateName === 'supply') {
       setSupply({type: TSupplyActionTypes.TOGGLE_FORCE})
     }
+    if (stateName === 'coil') {
+      setCoil({type: TCoilActionTypes.TOGGLE_TYPE})
+    }
   }
 
   return (
     <div className="calc-page page">
       <div className="calc-page__wrap wrap">
-
         <Group text="Wire" mod="wire">
           <Select text="Nom. diameter" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
                   value={wire.nomDiam}/>
@@ -113,13 +118,23 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
         <Group text="Coil" mod="coil">
           <Select text="Shape of coil" mod="shape" name="shape" options={[{value: 'round'}, {value: 'random'}]} handler={handlerSelect}
                   value={coil.shape}/>
-          <Field mod="height" text="Coil height" handler={handlerInput} id="coil-height" value={coil.height}/>
-          <Field mod="thick" text="Coil thickness" handler={handlerInput} id="coil-thickness" value={coil.thickness}/>
+          <Checkbox text="Frame coil?"
+                    mod="is-frame"
+                    id="coil-isFrame"
+                    checked={coil.isFrame}
+                    handler={handlerCheck}/>
+          <Field mod="max-height" text="Max. height" handler={handlerInput} id="coil-maxHeight" value={coil.maxHeight}/>
+          <Field mod="max-thick" text="Max. thickness" handler={handlerInput} id="coil-maxThick" value={coil.maxThick}/>
           <Field mod="inner-diam"
                  text="Coil inner diam"
                  handler={handlerInput}
                  id="coil-innerDiam"
                  value={coil.innerDiam}/>
+          <Field mod="turns"
+                 text="Turns"
+                 handler={handlerInput}
+                 id="coil-turns"
+                 value={coil.turns}/>
         </Group>
         <Group text="Supply" mod="supply">
           <Field text="Hold voltage"
