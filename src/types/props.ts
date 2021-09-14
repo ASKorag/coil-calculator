@@ -2,7 +2,7 @@ import React, {InputHTMLAttributes} from 'react'
 import {ButtonHTMLAttributes, HTMLAttributes, OptionHTMLAttributes, SelectHTMLAttributes} from 'react'
 import {TWiresBase} from './wires'
 import {TSourceData, TFinalData} from './states'
-import {TSourceDataAction, TFinalDataAction} from './actions'
+import {TSourceDataAction, TFinalDataAction, TSourceDataActionTypes} from './actions'
 
 export type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string,
@@ -35,7 +35,8 @@ export type TCalcPageProps = HTMLAttributes<HTMLDivElement> & {
 
 export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   text: string,
-  mod: string,
+  id: string,
+  action: TSourceDataActionTypes,
   handler: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
@@ -46,6 +47,7 @@ export type TGroupProps = HTMLAttributes<HTMLDivElement> & {
 
 export type TCheckboxProps = InputHTMLAttributes<HTMLInputElement> & {
   text: string,
-  mod: string,
+  id: string,
+  action: TSourceDataActionTypes,
   handler: (event: React.ChangeEvent<HTMLInputElement>) => void
 }

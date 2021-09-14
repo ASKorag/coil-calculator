@@ -45,74 +45,18 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   }
 
   function handlerInput(event: React.ChangeEvent<HTMLInputElement>) {
-    const value = event.target.value
-    const id = event.target.id
-    const [stateName, stateProp] = id.split('-')
-    switch (stateName) {
-      case 'coil':
-        changeCoil(stateProp, +value)
-        break
-      case 'supply':
-        changeSupply(stateProp, +value)
-        break
-      case 'temp':
-        changeTemp(stateProp, +value)
-        break
-    }
-  }
-
-  function changeCoil(stateProp: string, value: number): void {
-    if (stateProp === 'maxHeight') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_MAX_HEIGHT, value})
-    }
-    if (stateProp === 'maxThick') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_MAX_THICK, value})
-    }
-    if (stateProp === 'innerDiam') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_INNER_DIAM, value})
-    }
-    if (stateProp === 'turns') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_TURNS, value})
-    }
-  }
-
-  function changeSupply(stateProp: string, value: number): void {
-    if (stateProp === 'holdVoltage') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE, value})
-    }
-    if (stateProp === 'forceVoltage') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE, value})
-    }
-    if (stateProp === 'voltageDev') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_VOLTAGE_DEV, value})
-    }
-  }
-
-  function changeTemp(stateProp: string, value: number): void {
-    if (stateProp === 'overheat') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_OVERHEAT, value})
-    }
-  }
-
-  function handlerCheck(event: React.ChangeEvent<HTMLInputElement>) {
-    const id = event.target.id
-    const [stateName, stateProp] = id.split('-')
-
-    if (stateName === 'supply') {
-      setSourceData({type: TSourceDataActionTypes.TOGGLE_FORCING})
-    }
-    if (stateName === 'coil') {
-      setSourceData({type: TSourceDataActionTypes.TOGGLE_COIL_TYPE})
-    }
+    const actionType = event.target.dataset.action as TSourceDataActionTypes
+    const {type, value} = event.target
+    type === 'checkbox' ? setSourceData({type: actionType}) : setSourceData({type: actionType, value: +value})
   }
 
   return (
     <div className="calc-page page">
       <div className="calc-page__wrap wrap">
         <Group text="Wire" mod="wire">
-          <Select text="Nom. diameter" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
+          <Select text="Nom. diameter, mm" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
                   value={wire.nomDiam}/>
-          <Select text="Isolation " mod="isol" name="isol" options={wireMaxDiams}
+          <Select text="Isolation" mod="isol" name="isol" options={wireMaxDiams}
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
         <Group text="Coil" mod="coil">
@@ -123,50 +67,74 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                   handler={handlerSelect}
                   value={coil.shape}/>
           <Checkbox text="Frame coil?"
-                    mod="is-frame"
-                    id="coil-isFrame"
+                    id="is-frame"
+                    action={TSourceDataActionTypes.TOGGLE_COIL_TYPE}
                     checked={coil.isFrame}
-                    handler={handlerCheck}/>
-          <Field mod="max-height" text="Max. height" handler={handlerInput} id="coil-maxHeight" value={coil.maxHeight}/>
-          <Field mod="max-thick" text="Max. thickness" handler={handlerInput} id="coil-maxThick" value={coil.maxThick}/>
-          <Field mod="inner-diam"
-                 text="Coil inner diam"
+                    handler={handlerInput}/>
+          <Field text="Max. height, mm"
+                 id="max-height"
+                 action={TSourceDataActionTypes.CHANGE_MAX_HEIGHT}
+                 value={coil.maxHeight}
                  handler={handlerInput}
-                 id="coil-innerDiam"
-                 value={coil.innerDiam}/>
-          <Field mod="turns"
-                 text="Turns"
+          />
+          <Field text="Max. thickness, mm"
+                 id="max-thick"
+                 action={TSourceDataActionTypes.CHANGE_MAX_THICK}
+                 value={coil.maxThick}
                  handler={handlerInput}
-                 id="coil-turns"
-                 value={coil.turns}/>
+          />
+          <Field text="Coil inner diam, mm"
+                 id="inner-diam"
+                 action={TSourceDataActionTypes.CHANGE_INNER_DIAM}
+                 value={coil.innerDiam}
+                 handler={handlerInput}
+          />
+          <Field text="Turns"
+                 id="turns"
+                 action={TSourceDataActionTypes.CHANGE_TURNS}
+                 step="1"
+                 value={coil.turns}
+                 handler={handlerInput}
+          />
+          <Field text="Fill factor, %"
+                 id="fill-factor"
+                 action={TSourceDataActionTypes.CHANGE_FILL_FACTOR}
+                 step="1"
+                 max="100"
+                 value={coil.fillFactor}
+                 handler={handlerInput}
+          />
         </Group>
         <Group text="Supply" mod="supply">
-          <Field text="Hold voltage"
-                 id="supply-holdVoltage"
-                 mod="hold-voltage"
+          <Field text="Holding voltage, V"
+                 id="hold-voltage"
+                 action={TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE}
                  value={supply.holdVoltage}
                  handler={handlerInput}/>
-          <Checkbox text="Force voltage?"
-                    mod="is-force"
-                    id="supply-isForce"
+          <Checkbox text="Is forcing voltage?"
+                    id="is-forcing"
+                    action={TSourceDataActionTypes.TOGGLE_FORCING}
                     checked={supply.isForcing}
-                    handler={handlerCheck}/>
-          <Field text="Force voltage"
-                 id="supply-forceVoltage"
-                 mod="force-voltage"
+                    handler={handlerInput}/>
+          <Field text="Forcing voltage, V"
+                 id="force-voltage"
+                 action={TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE}
                  value={supply.forceVoltage}
+                 handler={handlerInput}
                  disabled={!supply.isForcing}
-                 handler={handlerInput}/>
-          <Field text="Voltage deviation"
-                 id="supply-voltageDev"
-                 mod="voltage-dev"
+          />
+          <Field text="Voltage deviation, %"
+                 id="voltage-dev"
+                 action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
+                 step="1"
+                 max="100"
                  value={supply.voltageDev}
                  handler={handlerInput}/>
         </Group>
         <Group text="Temperature" mod="temp">
-          <Field text="Overheat"
-                 id="temp-overheat"
-                 mod="overheat"
+          <Field text="Overheat, °C"
+                 id="overheat"
+                 action={TSourceDataActionTypes.CHANGE_OVERHEAT}
                  value={temp.overheat}
                  handler={handlerInput}/>
         </Group>

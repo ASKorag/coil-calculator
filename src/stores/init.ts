@@ -17,7 +17,7 @@ export const initSourceData: TSourceData = {
     maxThick: 16.5,
     innerDiam: 20,
     turns: 1000,
-    fillFactor: 0.85
+    fillFactor: 85
   },
   supply: {
     isForcing: false,
