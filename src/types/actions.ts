@@ -1,46 +1,37 @@
-import {TWire} from './states'
+import {TCoilShape, TWire} from './states'
 
-export enum TCoilActionTypes {
+export enum TSourceDataActionTypes {
+  //Wire
+  CHANGE_WIRE = 'CHANGE_WIRE',
+  CHANGE_ISOLATION = 'CHANGE_ISOLATION',
+  //Coil
   CHANGE_SHAPE = 'CHANGE_SHAPE',
-  TOGGLE_TYPE = 'TOGGLE_TYPE',
+  TOGGLE_COIL_TYPE = 'TOGGLE_COIL_TYPE',
   CHANGE_MAX_HEIGHT = 'CHANGE_MAX_HEIGHT',
   CHANGE_MAX_THICK = 'CHANGE_MAX_THICK',
   CHANGE_INNER_DIAM = 'CHANGE_INNER_DIAM',
-  CHANGE_TURNS = 'CHANGE_TURNS'
-}
-
-export enum TWireActionTypes {
-  CHANGE_WIRE = 'CHANGE_WIRE',
-  CHANGE_ISOLATION = 'CHANGE_ISOLATION'
-}
-
-export enum TSupplyActionTypes {
-  TOGGLE_FORCE = 'TOGGLE_FORCE',
+  CHANGE_TURNS = 'CHANGE_TURNS',
+  CHANGE_FILL_FACTOR = 'CHANGE_FILL_FACTOR',
+  //Supply
+  TOGGLE_FORCING = 'TOGGLE_FORCING',
   CHANGE_HOLD_VOLTAGE = 'CHANGE_HOLD_VOLTAGE',
   CHANGE_FORCE_VOLTAGE = 'CHANGE_FORCE_VOLTAGE',
   CHANGE_VOLTAGE_DEV = 'CHANGE_VOLTAGE_DEV',
-}
-
-export enum TTempActionTypes {
+  //Temp
   CHANGE_OVERHEAT = 'CHANGE_OVERHEAT'
 }
 
-export type TCoilAction = {
-  type: TCoilActionTypes,
-  value?: number | 'round' | 'random'
+export enum TFinalDataActionTypes {
+  CALC_RESSISTS = 'CALC_RESSISTS'
 }
 
-export type TWireAction = {
-  type: TWireActionTypes,
-  value: number | TWire
-}
-
-export type TSupplyAction = {
-  type: TSupplyActionTypes,
+export type TSourceDataAction = {
+  type: TSourceDataActionTypes,
+  wire?: TWire,
+  shape?: TCoilShape,
   value?: number
 }
 
-export type TTempAction = {
-  type: TTempActionTypes,
-  value: number
+export type TFinalDataAction = {
+  type: TFinalDataActionTypes
 }

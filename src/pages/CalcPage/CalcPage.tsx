@@ -2,16 +2,17 @@ import React from 'react'
 import './CalcPage.sass'
 import {Select} from 'components/atoms/Select/Select'
 import {TCalcPageProps} from 'types/props'
-import {TCoilActionTypes, TSupplyActionTypes, TTempActionTypes, TWireActionTypes} from 'types/actions'
 import {TWireBase} from 'types/wires'
 import {TWire} from 'types/states'
 import {Field} from '../../components/atoms/Field/Field'
 import {Group} from '../../components/molecules/Group/Group'
 import {Checkbox} from '../../components/atoms/Checkbox/Checkbox'
+import {TSourceDataActionTypes} from 'types/actions'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
-  const {wire, coil, temp, supply,} = states
-  const {setWire, setCoil, setSupply, setTemp,} = dispatchers
+  const {sourceData, finalData} = states
+  const {wire, coil, supply, temp} = sourceData
+  const {setSourceData, setFinalData} = dispatchers
   const selectWire = wires.find(item => item.nomDiam === wire.nomDiam) as TWireBase
   const wiresNomDiam = wires.map(wire => ({value: wire.nomDiam}))
   const wireMaxDiams = selectWire.maxDiams.map((item, index) => ({value: item, text: `Type ${index + 1}`}))
@@ -30,16 +31,15 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
         weight1km: newSelectWire.weight1km,
         resists1m: newSelectWire.resists1m
       }
-      setWire({type: TWireActionTypes.CHANGE_WIRE, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_WIRE, wire: value})
     }
     if (name === 'isol') {
-      setWire({type: TWireActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiams[index]})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiams[index]})
     }
     if (name === 'shape') {
       const value = event.target.value
       if (value === 'round' || value === 'random') {
-
-      setCoil({type: TCoilActionTypes.CHANGE_SHAPE, value})
+        setSourceData({type: TSourceDataActionTypes.CHANGE_SHAPE, shape: value})
       }
     }
   }
@@ -63,34 +63,34 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
 
   function changeCoil(stateProp: string, value: number): void {
     if (stateProp === 'maxHeight') {
-      setCoil({type: TCoilActionTypes.CHANGE_MAX_HEIGHT, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_MAX_HEIGHT, value})
     }
     if (stateProp === 'maxThick') {
-      setCoil({type: TCoilActionTypes.CHANGE_MAX_THICK, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_MAX_THICK, value})
     }
     if (stateProp === 'innerDiam') {
-      setCoil({type: TCoilActionTypes.CHANGE_INNER_DIAM, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_INNER_DIAM, value})
     }
     if (stateProp === 'turns') {
-      setCoil({type: TCoilActionTypes.CHANGE_TURNS, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_TURNS, value})
     }
   }
 
   function changeSupply(stateProp: string, value: number): void {
     if (stateProp === 'holdVoltage') {
-      setSupply({type: TSupplyActionTypes.CHANGE_HOLD_VOLTAGE, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE, value})
     }
     if (stateProp === 'forceVoltage') {
-      setSupply({type: TSupplyActionTypes.CHANGE_FORCE_VOLTAGE, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE, value})
     }
     if (stateProp === 'voltageDev') {
-      setSupply({type: TSupplyActionTypes.CHANGE_VOLTAGE_DEV, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_VOLTAGE_DEV, value})
     }
   }
 
   function changeTemp(stateProp: string, value: number): void {
     if (stateProp === 'overheat') {
-      setTemp({type: TTempActionTypes.CHANGE_OVERHEAT, value})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_OVERHEAT, value})
     }
   }
 
@@ -99,10 +99,10 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     const [stateName, stateProp] = id.split('-')
 
     if (stateName === 'supply') {
-      setSupply({type: TSupplyActionTypes.TOGGLE_FORCE})
+      setSourceData({type: TSourceDataActionTypes.TOGGLE_FORCING})
     }
     if (stateName === 'coil') {
-      setCoil({type: TCoilActionTypes.TOGGLE_TYPE})
+      setSourceData({type: TSourceDataActionTypes.TOGGLE_COIL_TYPE})
     }
   }
 
@@ -116,7 +116,11 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
         <Group text="Coil" mod="coil">
-          <Select text="Shape of coil" mod="shape" name="shape" options={[{value: 'round'}, {value: 'random'}]} handler={handlerSelect}
+          <Select text="Shape of coil"
+                  mod="shape"
+                  name="shape"
+                  options={[{value: 'round'}, {value: 'random'}]}
+                  handler={handlerSelect}
                   value={coil.shape}/>
           <Checkbox text="Frame coil?"
                     mod="is-frame"
@@ -145,13 +149,13 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
           <Checkbox text="Force voltage?"
                     mod="is-force"
                     id="supply-isForce"
-                    checked={supply.isForce}
+                    checked={supply.isForcing}
                     handler={handlerCheck}/>
           <Field text="Force voltage"
                  id="supply-forceVoltage"
                  mod="force-voltage"
                  value={supply.forceVoltage}
-                 disabled={!supply.isForce}
+                 disabled={!supply.isForcing}
                  handler={handlerInput}/>
           <Field text="Voltage deviation"
                  id="supply-voltageDev"

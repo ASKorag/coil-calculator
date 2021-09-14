@@ -13,12 +13,13 @@ export type TCoil = {
   maxHeight: number,
   maxThick: number,
   innerDiam: number,
-  turns: number
+  turns: number,
+  fillFactor: number,
 }
 
 export type TSupply = {
   holdVoltage: number,
-  isForce: boolean,
+  isForcing: boolean,
   forceVoltage?: number,
   voltageDev: number,
 }
@@ -49,4 +50,11 @@ export type TFinalData = {
   resists: TGenElectricParam<TNumbArr>,
   withHoldVoltage: TGenElectricParam<TElectricParam>,
   withForceVoltage: TGenElectricParam<TElectricParam>
+}
+
+export type TSourceData = {
+  wire: TWire,
+  coil: TCoil,
+  supply: TSupply,
+  temp: TTemp
 }

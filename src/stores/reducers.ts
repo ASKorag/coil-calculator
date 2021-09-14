@@ -1,69 +1,50 @@
-import {TCoil, TFinalData, TSupply, TTemp, TWire,} from 'types/states'
+import {TFinalData, TSourceData} from 'types/states'
+
 import {
-  TCoilAction,
-  TCoilActionTypes,
-  TSupplyAction,
-  TSupplyActionTypes,
-  TTempAction,
-  TTempActionTypes,
-  TWireAction,
-  TWireActionTypes
+  TSourceDataAction,
+  TSourceDataActionTypes,
 } from '../types/actions'
 
-export function wireReducer(state: TWire, {type, value}: TWireAction) {
+export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}: TSourceDataAction): TSourceData => {
   switch (type) {
-    case TWireActionTypes.CHANGE_WIRE:
-      return typeof value !== 'number' ? value : state
-    case TWireActionTypes.CHANGE_ISOLATION:
-      return typeof value === 'number' ? {...state, maxDiam: value} : state
+    //Wire
+    case TSourceDataActionTypes.CHANGE_WIRE:
+      return wire ? {...state, wire} : state
+    case TSourceDataActionTypes.CHANGE_ISOLATION:
+      return value ? {...state, wire: {...state.wire, maxDiam: value}} : state
+    //Coil
+    case TSourceDataActionTypes.CHANGE_SHAPE:
+      return shape ? {...state, coil: {...state.coil, shape}} : state
+    case TSourceDataActionTypes.TOGGLE_COIL_TYPE:
+      return {...state, coil: {...state.coil, isFrame: !state.coil.isFrame}}
+    case TSourceDataActionTypes.CHANGE_MAX_HEIGHT:
+      return value ? {...state, coil: {...state.coil, maxHeight: value}} : state
+    case TSourceDataActionTypes.CHANGE_MAX_THICK:
+      return value ? {...state, coil: {...state.coil, maxThick: value}} : state
+    case TSourceDataActionTypes.CHANGE_INNER_DIAM:
+      return value ? {...state, coil: {...state.coil, innerDiam: value}} : state
+    case TSourceDataActionTypes.CHANGE_TURNS:
+      return value ? {...state, coil: {...state.coil, turns: value}} : state
+    case TSourceDataActionTypes.CHANGE_FILL_FACTOR:
+      return value ? {...state, coil: {...state.coil, fillFactor: value}} : state
+    //Supply
+    case TSourceDataActionTypes.TOGGLE_FORCING:
+      return {...state, supply: {...state.supply, isForcing: !state.supply.isForcing}}
+    case TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE:
+      return value ? {...state, supply: {...state.supply, forceVoltage: value}} : state
+    case TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE:
+      return value ? {...state, supply: {...state.supply, holdVoltage: value}} : state
+    case TSourceDataActionTypes.CHANGE_VOLTAGE_DEV:
+      return value ? {...state, supply: {...state.supply, voltageDev: value}} : state
+    //Temp
+    case TSourceDataActionTypes.CHANGE_OVERHEAT:
+      return value ? {...state, temp: {...state.temp, overheat: value}} : state
+    //Def
     default:
       return state
   }
 }
 
-export function coilReducer(state: TCoil, {type, value}: TCoilAction) {
-  switch (type) {
-    case TCoilActionTypes.CHANGE_SHAPE:
-      return value === 'round' || value === 'random' ? {...state, shape: value} : state
-    case TCoilActionTypes.TOGGLE_TYPE:
-      return {...state, isFrame: !state.isFrame}
-    case TCoilActionTypes.CHANGE_MAX_HEIGHT:
-      return typeof value === 'number' ? {...state, maxHeight: value} : state
-    case TCoilActionTypes.CHANGE_INNER_DIAM:
-      return typeof value === 'number' ? {...state, innerDiam: value} : state
-    case TCoilActionTypes.CHANGE_MAX_THICK:
-      return typeof value === 'number' ? {...state, maxThick: value} : state
-    case TCoilActionTypes.CHANGE_TURNS:
-      return typeof  value === 'number' ? {...state, turns: value} : state
-    default:
-      return state
-  }
-}
-
-export function supplyReducer(state: TSupply, {type, value}: TSupplyAction) {
-  switch (type) {
-    case TSupplyActionTypes.TOGGLE_FORCE:
-      return {...state, isForce: !state.isForce}
-    case TSupplyActionTypes.CHANGE_FORCE_VOLTAGE:
-      return value ? {...state, forceVoltage: value} : state
-    case TSupplyActionTypes.CHANGE_HOLD_VOLTAGE:
-      return value ? {...state, holdVoltage: value} : state
-    case TSupplyActionTypes.CHANGE_VOLTAGE_DEV:
-      return value ? {...state, voltageDev: value} : state
-    default:
-      return state
-  }
-}
-
-export function tempReducer(state: TTemp, {type, value}: TTempAction) {
-  switch (type) {
-    case TTempActionTypes.CHANGE_OVERHEAT:
-      return {...state, overheat: value}
-    default:
-      return state
-  }
-}
-
-export const finalDataReducer = (state: TFinalData, action: {type: string}): TFinalData => {
+export const finalDataReducer = (state: TFinalData, action: { type: string }): TFinalData => {
   return state
 }

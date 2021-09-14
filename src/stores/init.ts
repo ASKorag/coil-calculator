@@ -1,33 +1,33 @@
-import {TCoil, TFinalData, TSupply, TTemp, TWire} from '../types/states'
+import {TSourceData, TFinalData} from 'types/states'
 import {TY_027} from '../wires/TY_027'
 
 const initWire = TY_027[0]
 
-export const initWireState: TWire = {
-  nomDiam: initWire.nomDiam,
-  maxDiam: initWire.maxDiams[1],
-  weight1km: initWire.weight1km,
-  resists1m: initWire.resists1m
-}
-
-export const initCoilState: TCoil = {
-  shape: 'round',
-  isFrame: true,
-  maxHeight: 45,
-  maxThick: 16.5,
-  innerDiam: 20,
-  turns: 1000
-}
-
-export const initSupplyState: TSupply = {
-  isForce: false,
-  holdVoltage: 200,
-  forceVoltage: 250,
-  voltageDev: 10,
-}
-
-export const initTempState: TTemp = {
-  overheat: 80
+export const initSourceData: TSourceData = {
+  wire: {
+    nomDiam: initWire.nomDiam,
+    maxDiam: initWire.maxDiams[1],
+    weight1km: initWire.weight1km,
+    resists1m: initWire.resists1m
+  },
+  coil: {
+    shape: 'round',
+    isFrame: true,
+    maxHeight: 45,
+    maxThick: 16.5,
+    innerDiam: 20,
+    turns: 1000,
+    fillFactor: 0.85
+  },
+  supply: {
+    isForcing: false,
+    holdVoltage: 200,
+    forceVoltage: 250,
+    voltageDev: 10,
+  },
+  temp: {
+    overheat: 80
+  }
 }
 
 export const initFinalData: TFinalData = {

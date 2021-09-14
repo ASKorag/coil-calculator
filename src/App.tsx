@@ -6,24 +6,21 @@ import {MainPage} from 'pages/MainPage/MainPage'
 import {CalcPage} from 'pages/CalcPage/CalcPage'
 
 import {TY_027} from 'wires/TY_027'
-import {initCoilState, initFinalData, initSupplyState, initTempState, initWireState} from 'stores/init'
-import {wireReducer, coilReducer, supplyReducer, tempReducer, finalDataReducer} from 'stores/reducers'
+import {initSourceData, initFinalData} from 'stores/init'
+import {
+  sourceDataReducer,
+  finalDataReducer
+} from 'stores/reducers'
 
 export const App = () => {
-  const [wire, setWire] = useReducer(wireReducer, initWireState)
-  const [coil, setCoil] = useReducer(coilReducer, initCoilState)
-  const [supply, setSupply] = useReducer(supplyReducer, initSupplyState)
-  const [temp, setTemp] = useReducer(tempReducer, initTempState)
+  const [sourceData, setSourceData] = useReducer(sourceDataReducer, initSourceData)
   const [finalData, setFinalData] = useReducer(finalDataReducer, initFinalData)
   return (
     <>
       <Route path="/" component={MainPage} exact/>
       <Route path="/calc" render={() =>
-        <CalcPage wires={TY_027} states={{wire, coil, supply, temp}} dispatchers={{
-          setWire,
-          setCoil,
-          setSupply,
-          setTemp,
+        <CalcPage wires={TY_027} states={{sourceData, finalData}} dispatchers={{
+          setSourceData, setFinalData
         }}/>}/>
     </>
   )
