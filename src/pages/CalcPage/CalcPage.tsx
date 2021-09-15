@@ -16,7 +16,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   const {setSourceData, setFinalData} = dispatchers
   const selectWire = wires.find(item => item.nomDiam === wire.nomDiam) as TWireBase
   const wiresNomDiam = wires.map(wire => ({value: wire.nomDiam}))
-  const wireMaxDiams = selectWire.maxDiam.map((item, index) => ({value: item, text: `Type ${index + 1}`}))
+  const wireMaxDiams = selectWire.maxDiam.map((item, index) => ({value: item, text: `Тип ${index + 1}`}))
 
   function handlerSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     const name = event.target.name
@@ -96,50 +96,50 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   return (
     <div className="calc-page page">
       <div className="calc-page__wrap wrap">
-        <Group text="Wire" mod="wire">
-          <Select text="Nom. diameter, mm" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
+        <Group text="Провод" mod="wire">
+          <Select text="Ном. диаметр, мм" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
                   value={wire.nomDiam}/>
-          <Select text="Isolation" mod="isol" name="isol" options={wireMaxDiams}
+          <Select text="Изоляция" mod="isol" name="isol" options={wireMaxDiams}
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
-        <Group text="Coil" mod="coil">
-          <Select text="Shape of coil"
+        <Group text="Катушка" mod="coil">
+          <Select text="Форма катушки"
                   mod="shape"
                   name="shape"
-                  options={[{value: 'round'}, {value: 'random'}]}
+                  options={[{value: 'round', text: 'Круглая'}, {value: 'random', text: 'Произвольная'}]}
                   handler={handlerSelect}
                   value={coil.shape}/>
-          <Checkbox text="Frame coil?"
+          <Checkbox text="Каркасная?"
                     id="is-frame"
                     action={TSourceDataActionTypes.TOGGLE_COIL_TYPE}
                     checked={coil.isFrame}
                     handler={handlerInput}/>
-          <Field text="Max. height, mm"
+          <Field text="Макс. высота, мм"
                  id="max-height"
                  action={TSourceDataActionTypes.CHANGE_MAX_HEIGHT}
                  value={coil.maxHeight}
                  handler={handlerInput}
           />
-          <Field text="Max. thickness, mm"
+          <Field text="Макс. толщина, мм"
                  id="max-thick"
                  action={TSourceDataActionTypes.CHANGE_MAX_THICK}
                  value={coil.maxThick}
                  handler={handlerInput}
           />
-          <Field text={`Coil inner ${coil.shape === 'round' ? 'diameter' : 'perimeter'}, mm`}
+          <Field text={`Внутренний ${coil.shape === 'round' ? 'диаметр' : 'периметр'}, мм`}
                  id={`inner-${coil.shape === 'round' ? 'diam' : 'perim'}`}
                  action={TSourceDataActionTypes.CHANGE_INNER_LENGTH}
                  value={coil.innerLength}
                  handler={handlerInput}
           />
-          <Field text="Turns"
+          <Field text="Витки"
                  id="turns"
                  action={TSourceDataActionTypes.CHANGE_TURNS}
                  step="1"
                  value={coil.turns}
                  handler={handlerInput}
           />
-          <Field text="Fill factor, %"
+          <Field text="Заполнение, %"
                  id="fill-factor"
                  action={TSourceDataActionTypes.CHANGE_FILL_PCT}
                  step="1"
@@ -148,25 +148,25 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  handler={handlerInput}
           />
         </Group>
-        <Group text="Supply" mod="supply">
-          <Field text="Holding voltage, V"
+        <Group text="Питание" mod="supply">
+          <Field text="Напряжение удержания, В"
                  id="hold-voltage"
                  action={TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE}
                  value={supply.holdVoltage}
                  handler={handlerInput}/>
-          <Checkbox text="Is forcing voltage?"
+          <Checkbox text="Форсировка?"
                     id="is-forcing"
                     action={TSourceDataActionTypes.TOGGLE_FORCING}
                     checked={supply.isForcing}
                     handler={handlerInput}/>
-          <Field text="Forcing voltage, V"
+          <Field text="Напряжение форсировки, В"
                  id="force-voltage"
                  action={TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE}
                  value={supply.forceVoltage}
                  handler={handlerInput}
                  hidden={!supply.isForcing}
           />
-          <Field text="Voltage deviation, %"
+          <Field text="Отклонение напряжения, %"
                  id="voltage-dev"
                  action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
                  step="1"
@@ -174,8 +174,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={supply.voltageDev}
                  handler={handlerInput}/>
         </Group>
-        <Group text="Temperature" mod="temp">
-          <Field text="Overheat, °C"
+        <Group text="Температура" mod="temp">
+          <Field text="Перегрев, °C"
                  id="overheat"
                  action={TSourceDataActionTypes.CHANGE_OVERHEAT}
                  value={temp.overheat}
