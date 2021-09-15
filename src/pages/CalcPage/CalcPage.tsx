@@ -83,11 +83,19 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={coil.maxThick}
                  handler={handlerInput}
           />
-          <Field text="Coil inner diam, mm"
+          <Field text="Coil inner diameter, mm"
                  id="inner-diam"
                  action={TSourceDataActionTypes.CHANGE_INNER_DIAM}
                  value={coil.innerDiam}
                  handler={handlerInput}
+                 hidden={coil.shape === 'random'}
+          />
+          <Field text="Coil inner perimeter, mm"
+                 id="inner-perim"
+                 action={TSourceDataActionTypes.CHANGE_INNER_PERIM}
+                 value={coil.innerPerim}
+                 handler={handlerInput}
+                 hidden={coil.shape === 'round'}
           />
           <Field text="Turns"
                  id="turns"
@@ -121,7 +129,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE}
                  value={supply.forceVoltage}
                  handler={handlerInput}
-                 disabled={!supply.isForcing}
+                 hidden={!supply.isForcing}
           />
           <Field text="Voltage deviation, %"
                  id="voltage-dev"

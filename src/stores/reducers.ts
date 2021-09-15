@@ -23,6 +23,8 @@ export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}
       return value ? {...state, coil: {...state.coil, maxThick: value}} : state
     case TSourceDataActionTypes.CHANGE_INNER_DIAM:
       return value ? {...state, coil: {...state.coil, innerDiam: value}} : state
+    case TSourceDataActionTypes.CHANGE_INNER_PERIM:
+      return value ? {...state, coil: {...state.coil, innerPerim: value}} : state
     case TSourceDataActionTypes.CHANGE_TURNS:
       return value ? {...state, coil: {...state.coil, turns: value}} : state
     case TSourceDataActionTypes.CHANGE_FILL_FACTOR:

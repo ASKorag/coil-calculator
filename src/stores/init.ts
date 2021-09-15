@@ -16,6 +16,7 @@ export const initSourceData: TSourceData = {
     maxHeight: 45,
     maxThick: 16.5,
     innerDiam: 20,
+    innerPerim: 100,
     turns: 1000,
     fillFactor: 85
   },

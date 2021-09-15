@@ -13,6 +13,7 @@ export type TCoil = {
   maxHeight: number,
   maxThick: number,
   innerDiam: number,
+  innerPerim: number,
   turns: number,
   fillFactor: number,
 }
