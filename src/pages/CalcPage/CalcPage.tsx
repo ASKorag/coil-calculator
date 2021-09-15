@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import './CalcPage.sass'
 import {Select} from 'components/atoms/Select/Select'
 import {TCalcPageProps} from 'types/props'
@@ -7,7 +7,8 @@ import {TWire} from 'types/states'
 import {Field} from '../../components/atoms/Field/Field'
 import {Group} from '../../components/molecules/Group/Group'
 import {Checkbox} from '../../components/atoms/Checkbox/Checkbox'
-import {TSourceDataActionTypes} from 'types/actions'
+import {TFinalDataActionTypes, TSourceDataActionTypes} from 'types/actions'
+import {getAVGTurnLength, getCSA, getOverheatCoeff} from '../../utils/utils'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
   const {sourceData, finalData} = states
@@ -50,6 +51,48 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     type === 'checkbox' ? setSourceData({type: actionType}) : setSourceData({type: actionType, value: +value})
   }
 
+  function calcFinalData() {
+    //Coil
+    const coilFullCSA = getCSA(wire.maxDiam, coil.turns, coil.fillPct, true)
+    let newHeight, newThick
+    if (coil.isFrame) {
+      newHeight = coil.maxHeight
+      newThick = coilFullCSA / coil.maxHeight
+      setFinalData({type: TFinalDataActionTypes.CHANGE_HEIGHT, value: newHeight})
+      setFinalData({type: TFinalDataActionTypes.CHANGE_THICK, value: newThick})
+    } else {
+      newHeight = coilFullCSA / coil.maxThick
+      newThick = coil.maxThick
+      setFinalData({type: TFinalDataActionTypes.CHANGE_HEIGHT, value: newHeight})
+      setFinalData({type: TFinalDataActionTypes.CHANGE_THICK, value: newThick})
+    }
+    const avgTurnLength = getAVGTurnLength(coil.innerLength, newThick, coil.shape === 'round' ? 'diameter' : 'perimeter')
+    setFinalData({type: TFinalDataActionTypes.CHANGE_AVG_TURN_LENGTH, value: avgTurnLength})
+
+    const fullLength = avgTurnLength * coil.turns
+    const weight = fullLength * wire.weight1km / 1e6
+    setFinalData({type: TFinalDataActionTypes.CHANGE_WEIGHT, value: weight})
+//Resist
+    const resistWithoutOverheat = wire.resist1m.map(resist => {
+      return resist ? resist * fullLength / 1e3 : null
+    })
+    setFinalData({type: TFinalDataActionTypes.CHANGE_RESIST_WITHOUT_OVERHEAT, resist: resistWithoutOverheat})
+    const overheatCoeff = getOverheatCoeff(temp.overheat)
+    const resistWithOverheat = wire.resist1m.map(resist => {
+      return resist ? overheatCoeff * resist * fullLength / 1e3 : null
+    })
+    setFinalData({type: TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT, resist: resistWithOverheat})
+
+  }
+
+  useEffect(() => {
+    calcFinalData()
+  }, [sourceData])
+
+  useEffect(() => {
+    console.log(JSON.stringify(finalData))
+  }, [finalData])
+
   return (
     <div className="calc-page page">
       <div className="calc-page__wrap wrap">
@@ -83,19 +126,11 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={coil.maxThick}
                  handler={handlerInput}
           />
-          <Field text="Coil inner diameter, mm"
-                 id="inner-diam"
-                 action={TSourceDataActionTypes.CHANGE_INNER_DIAM}
-                 value={coil.innerDiam}
+          <Field text={`Coil inner ${coil.shape === 'round' ? 'diameter' : 'perimeter'}, mm`}
+                 id={`inner-${coil.shape === 'round' ? 'diam' : 'perim'}`}
+                 action={TSourceDataActionTypes.CHANGE_INNER_LENGTH}
+                 value={coil.innerLength}
                  handler={handlerInput}
-                 hidden={coil.shape === 'random'}
-          />
-          <Field text="Coil inner perimeter, mm"
-                 id="inner-perim"
-                 action={TSourceDataActionTypes.CHANGE_INNER_PERIM}
-                 value={coil.innerPerim}
-                 handler={handlerInput}
-                 hidden={coil.shape === 'round'}
           />
           <Field text="Turns"
                  id="turns"
@@ -106,10 +141,10 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
           />
           <Field text="Fill factor, %"
                  id="fill-factor"
-                 action={TSourceDataActionTypes.CHANGE_FILL_FACTOR}
+                 action={TSourceDataActionTypes.CHANGE_FILL_PCT}
                  step="1"
                  max="100"
-                 value={coil.fillFactor}
+                 value={coil.fillPct}
                  handler={handlerInput}
           />
         </Group>

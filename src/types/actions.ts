@@ -1,4 +1,4 @@
-import {TCoilShape, TWire} from './states'
+import {TCoilShape, TNumbArr, TWire} from './states'
 
 export enum TSourceDataActionTypes {
   //Wire
@@ -9,10 +9,9 @@ export enum TSourceDataActionTypes {
   TOGGLE_COIL_TYPE = 'TOGGLE_COIL_TYPE',
   CHANGE_MAX_HEIGHT = 'CHANGE_MAX_HEIGHT',
   CHANGE_MAX_THICK = 'CHANGE_MAX_THICK',
-  CHANGE_INNER_DIAM = 'CHANGE_INNER_DIAM',
-  CHANGE_INNER_PERIM = 'CHANGE_INNER_PERIM',
+  CHANGE_INNER_LENGTH = 'CHANGE_INNER_LENGTH',
   CHANGE_TURNS = 'CHANGE_TURNS',
-  CHANGE_FILL_FACTOR = 'CHANGE_FILL_FACTOR',
+  CHANGE_FILL_PCT = 'CHANGE_FILL_PCT',
   //Supply
   TOGGLE_FORCING = 'TOGGLE_FORCING',
   CHANGE_HOLD_VOLTAGE = 'CHANGE_HOLD_VOLTAGE',
@@ -23,7 +22,14 @@ export enum TSourceDataActionTypes {
 }
 
 export enum TFinalDataActionTypes {
-  CALC_RESIST = 'CALC_RESIST'
+  //Coil
+  CHANGE_HEIGHT = 'CHANGE_HEIGHT',
+  CHANGE_THICK = 'CHANGE_THICK',
+  CHANGE_AVG_TURN_LENGTH = 'CHANGE_AVG_TURN_LENGTH',
+  CHANGE_WEIGHT = 'CHANGE_WEIGHT',
+  //Resist
+  CHANGE_RESIST_WITHOUT_OVERHEAT = 'CHANGE_RESIST_WITHOUT_OVERHEAT',
+  CHANGE_RESIST_WITH_OVERHEAT = 'CHANGE_RESIST_WITH_OVERHEAT',
 }
 
 export type TSourceDataAction = {
@@ -34,5 +40,7 @@ export type TSourceDataAction = {
 }
 
 export type TFinalDataAction = {
-  type: TFinalDataActionTypes
+  type: TFinalDataActionTypes,
+  value?: number,
+  resist?: TNumbArr
 }

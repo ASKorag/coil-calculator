@@ -12,10 +12,9 @@ export type TCoil = {
   isFrame: boolean,
   maxHeight: number,
   maxThick: number,
-  innerDiam: number,
-  innerPerim: number,
+  innerLength: number,
   turns: number,
-  fillFactor: number,
+  fillPct: number,
 }
 
 export type TSupply = {
@@ -29,7 +28,7 @@ export type TTemp = {
   overheat: number
 }
 
-type TNumbArr = Array<number | null>
+export type TNumbArr = Array<number | null>
 
 type TElectricParam = {
   current: Array<TNumbArr>,
@@ -46,7 +45,7 @@ export type TFinalData = {
   coil: {
     height: number,
     thick: number,
-    averageTurnLength: number,
+    avgTurnLength: number,
     weight: number,
   },
   resist: TGenElectricParam<TNumbArr>,

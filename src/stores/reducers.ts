@@ -1,9 +1,6 @@
 import {TFinalData, TSourceData} from 'types/states'
 
-import {
-  TSourceDataAction,
-  TSourceDataActionTypes,
-} from '../types/actions'
+import {TFinalDataAction, TFinalDataActionTypes, TSourceDataAction, TSourceDataActionTypes,} from '../types/actions'
 
 export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}: TSourceDataAction): TSourceData => {
   switch (type) {
@@ -21,14 +18,12 @@ export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}
       return value ? {...state, coil: {...state.coil, maxHeight: value}} : state
     case TSourceDataActionTypes.CHANGE_MAX_THICK:
       return value ? {...state, coil: {...state.coil, maxThick: value}} : state
-    case TSourceDataActionTypes.CHANGE_INNER_DIAM:
-      return value ? {...state, coil: {...state.coil, innerDiam: value}} : state
-    case TSourceDataActionTypes.CHANGE_INNER_PERIM:
-      return value ? {...state, coil: {...state.coil, innerPerim: value}} : state
+    case TSourceDataActionTypes.CHANGE_INNER_LENGTH:
+      return value ? {...state, coil: {...state.coil, innerLength: value}} : state
     case TSourceDataActionTypes.CHANGE_TURNS:
       return value ? {...state, coil: {...state.coil, turns: value}} : state
-    case TSourceDataActionTypes.CHANGE_FILL_FACTOR:
-      return value ? {...state, coil: {...state.coil, fillFactor: value}} : state
+    case TSourceDataActionTypes.CHANGE_FILL_PCT:
+      return value ? {...state, coil: {...state.coil, fillPct: value}} : state
     //Supply
     case TSourceDataActionTypes.TOGGLE_FORCING:
       return {...state, supply: {...state.supply, isForcing: !state.supply.isForcing}}
@@ -47,6 +42,24 @@ export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}
   }
 }
 
-export const finalDataReducer = (state: TFinalData, action: { type: string }): TFinalData => {
-  return state
+export const finalDataReducer = (state: TFinalData, {type, value, resist}: TFinalDataAction): TFinalData => {
+  switch (type) {
+    //Coil
+    case TFinalDataActionTypes.CHANGE_HEIGHT:
+      return value ? {...state, coil: {...state.coil, height: value}} : state
+    case TFinalDataActionTypes.CHANGE_THICK:
+      return value ? {...state, coil: {...state.coil, thick: value}} : state
+    case TFinalDataActionTypes.CHANGE_AVG_TURN_LENGTH:
+      return value ? {...state, coil: {...state.coil, avgTurnLength: value}} : state
+    case TFinalDataActionTypes.CHANGE_WEIGHT:
+      return value ? {...state, coil: {...state.coil, weight: value}} : state
+    //Resist
+    case TFinalDataActionTypes.CHANGE_RESIST_WITHOUT_OVERHEAT:
+      return resist ? {...state, resist: {...state.resist, withoutOverheat: resist}} : state
+    case TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT:
+      return resist ? {...state, resist: {...state.resist, withOverheat: resist}} : state
+    //Def
+    default:
+      return state
+  }
 }

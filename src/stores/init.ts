@@ -15,10 +15,9 @@ export const initSourceData: TSourceData = {
     isFrame: true,
     maxHeight: 45,
     maxThick: 16.5,
-    innerDiam: 20,
-    innerPerim: 100,
+    innerLength: 200,
     turns: 1000,
-    fillFactor: 85
+    fillPct: 85
   },
   supply: {
     isForcing: false,
@@ -35,7 +34,7 @@ export const initFinalData: TFinalData = {
   coil: {
     height: 0,
     thick: 0,
-    averageTurnLength: 0,
+    avgTurnLength: 0,
     weight: 0
   },
   resist: {
