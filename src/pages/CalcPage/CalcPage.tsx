@@ -15,7 +15,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   const {setSourceData, setFinalData} = dispatchers
   const selectWire = wires.find(item => item.nomDiam === wire.nomDiam) as TWireBase
   const wiresNomDiam = wires.map(wire => ({value: wire.nomDiam}))
-  const wireMaxDiams = selectWire.maxDiams.map((item, index) => ({value: item, text: `Type ${index + 1}`}))
+  const wireMaxDiams = selectWire.maxDiam.map((item, index) => ({value: item, text: `Type ${index + 1}`}))
 
   function handlerSelect(event: React.ChangeEvent<HTMLSelectElement>) {
     const name = event.target.name
@@ -27,14 +27,14 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
       const isolIndex = isolSelect.selectedIndex
       const value: TWire = {
         nomDiam: newSelectWire.nomDiam,
-        maxDiam: newSelectWire.maxDiams[isolIndex],
+        maxDiam: newSelectWire.maxDiam[isolIndex],
         weight1km: newSelectWire.weight1km,
-        resists1m: newSelectWire.resists1m
+        resist1m: newSelectWire.resist1m
       }
       setSourceData({type: TSourceDataActionTypes.CHANGE_WIRE, wire: value})
     }
     if (name === 'isol') {
-      setSourceData({type: TSourceDataActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiams[index]})
+      setSourceData({type: TSourceDataActionTypes.CHANGE_ISOLATION, value: selectWire.maxDiam[index]})
     }
     if (name === 'shape') {
       const value = event.target.value

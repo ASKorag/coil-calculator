@@ -23,7 +23,7 @@ export enum TSourceDataActionTypes {
 }
 
 export enum TFinalDataActionTypes {
-  CALC_RESSISTS = 'CALC_RESSISTS'
+  CALC_RESIST = 'CALC_RESIST'
 }
 
 export type TSourceDataAction = {

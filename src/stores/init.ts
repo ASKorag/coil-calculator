@@ -6,9 +6,9 @@ const initWire = TY_027[0]
 export const initSourceData: TSourceData = {
   wire: {
     nomDiam: initWire.nomDiam,
-    maxDiam: initWire.maxDiams[1],
+    maxDiam: initWire.maxDiam[1],
     weight1km: initWire.weight1km,
-    resists1m: initWire.resists1m
+    resist1m: initWire.resist1m
   },
   coil: {
     shape: 'round',
@@ -34,32 +34,34 @@ export const initSourceData: TSourceData = {
 export const initFinalData: TFinalData = {
   coil: {
     height: 0,
-    thick: 0
+    thick: 0,
+    averageTurnLength: 0,
+    weight: 0
   },
-  resists: {
+  resist: {
     withOverheat: [0],
     withoutOverheat: [0]
   },
   withHoldVoltage: {
     withoutOverheat: {
-      currents: [[0], [0], [0]],
+      current: [[0], [0], [0]],
       mmf: [[0], [0], [0]],
       currentDensity: [[0], [0], [0]],
     },
     withOverheat: {
-      currents: [[0], [0], [0]],
+      current: [[0], [0], [0]],
       mmf: [[0], [0], [0]],
       currentDensity: [[0], [0], [0]],
     }
   },
   withForceVoltage: {
     withoutOverheat: {
-      currents: [[0], [0], [0]],
+      current: [[0], [0], [0]],
       mmf: [[0], [0], [0]],
       currentDensity: [[0], [0], [0]],
     },
     withOverheat: {
-      currents: [[0], [0], [0]],
+      current: [[0], [0], [0]],
       mmf: [[0], [0], [0]],
       currentDensity: [[0], [0], [0]],
     },

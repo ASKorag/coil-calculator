@@ -2,7 +2,7 @@ export type TWire = {
   nomDiam: number,
   maxDiam: number,
   weight1km: number,
-  resists1m: Array<number | null>
+  resist1m: Array<number | null>
 }
 
 export type TCoilShape = 'round' | 'random'
@@ -32,7 +32,7 @@ export type TTemp = {
 type TNumbArr = Array<number | null>
 
 type TElectricParam = {
-  currents: Array<TNumbArr>,
+  current: Array<TNumbArr>,
   mmf: Array<TNumbArr>,
   currentDensity: Array<TNumbArr>
 }
@@ -46,9 +46,10 @@ export type TFinalData = {
   coil: {
     height: number,
     thick: number,
-
+    averageTurnLength: number,
+    weight: number,
   },
-  resists: TGenElectricParam<TNumbArr>,
+  resist: TGenElectricParam<TNumbArr>,
   withHoldVoltage: TGenElectricParam<TElectricParam>,
   withForceVoltage: TGenElectricParam<TElectricParam>
 }
