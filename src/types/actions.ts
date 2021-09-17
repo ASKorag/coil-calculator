@@ -1,4 +1,4 @@
-import {TCoilShape, TNumbArr, TWire} from './states'
+import {TCoilShape, TElectricParam, TNumbArr, TWire} from './states'
 
 export enum TSourceDataActionTypes {
   //Wire
@@ -30,6 +30,12 @@ export enum TFinalDataActionTypes {
   //Resist
   CHANGE_RESIST_WITHOUT_OVERHEAT = 'CHANGE_RESIST_WITHOUT_OVERHEAT',
   CHANGE_RESIST_WITH_OVERHEAT = 'CHANGE_RESIST_WITH_OVERHEAT',
+  //Electric params with hold voltage
+  CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE = 'CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE',
+  CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_HOLD_VOLTAGE = 'CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_HOLD_VOLTAGE',
+  //Electric params with force voltage
+  CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_FORCE_VOLTAGE = 'CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_FORCE_VOLTAGE',
+  CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_FORCE_VOLTAGE = 'CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_FORCE_VOLTAGE',
 }
 
 export type TSourceDataAction = {
@@ -42,5 +48,6 @@ export type TSourceDataAction = {
 export type TFinalDataAction = {
   type: TFinalDataActionTypes,
   value?: number,
-  resist?: TNumbArr
+  resist?: TNumbArr,
+  params?: TElectricParam
 }

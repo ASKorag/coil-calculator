@@ -30,7 +30,7 @@ export type TTemp = {
 
 export type TNumbArr = Array<number | null>
 
-type TElectricParam = {
+export type TElectricParam = {
   current: Array<TNumbArr>,
   mmf: Array<TNumbArr>,
   currentDensity: Array<TNumbArr>

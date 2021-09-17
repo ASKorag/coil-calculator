@@ -8,7 +8,7 @@ import {Field} from '../../components/atoms/Field/Field'
 import {Group} from '../../components/molecules/Group/Group'
 import {Checkbox} from '../../components/atoms/Checkbox/Checkbox'
 import {TFinalDataActionTypes, TSourceDataActionTypes} from 'types/actions'
-import {getAVGTurnLength, getCSA, getOverheatCoeff} from '../../utils/utils'
+import {getAVGTurnLength, getCSA, getElectricParams, getOverheatCoeff} from '../../utils/utils'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
   const {sourceData, finalData} = states
@@ -66,7 +66,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
       setFinalData({type: TFinalDataActionTypes.CHANGE_HEIGHT, value: newHeight})
       setFinalData({type: TFinalDataActionTypes.CHANGE_THICK, value: newThick})
     }
-    const avgTurnLength = getAVGTurnLength(coil.innerLength, newThick, coil.shape === 'round' ? 'diameter' : 'perimeter')
+    const avgTurnLength = getAVGTurnLength(coil.innerLength, newThick,
+      coil.shape === 'round' ? 'diameter' : 'perimeter')
     setFinalData({type: TFinalDataActionTypes.CHANGE_AVG_TURN_LENGTH, value: avgTurnLength})
 
     const fullLength = avgTurnLength * coil.turns
@@ -82,7 +83,36 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
       return resist ? overheatCoeff * resist * fullLength / 1e3 : null
     })
     setFinalData({type: TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT, resist: resistWithOverheat})
+//Electric params
+    const wireCSA = getCSA(wire.nomDiam, 1, 100, false)
+    const electricParamsWithHoldVoltage = [
+      getElectricParams(supply.holdVoltage, supply.voltageDev, coil.turns, [...resistWithoutOverheat].reverse(),
+        wireCSA),
+      getElectricParams(supply.holdVoltage, supply.voltageDev, coil.turns, [...resistWithOverheat].reverse(), wireCSA)
+    ]
+    setFinalData({
+      type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE,
+      params: electricParamsWithHoldVoltage[0]
+    })
+    setFinalData({
+      type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_HOLD_VOLTAGE,
+      params: electricParamsWithHoldVoltage[1]
+    })
 
+    const electricParamsWithForceVoltage = [
+      getElectricParams(supply.forceVoltage ?? 0, supply.voltageDev, coil.turns, [...resistWithoutOverheat].reverse(),
+        wireCSA),
+      getElectricParams(supply.forceVoltage ?? 0, supply.voltageDev, coil.turns, [...resistWithOverheat].reverse(),
+        wireCSA)
+    ]
+    setFinalData({
+      type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_FORCE_VOLTAGE,
+      params: electricParamsWithForceVoltage[0]
+    })
+    setFinalData({
+      type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_FORCE_VOLTAGE,
+      params: electricParamsWithForceVoltage[1]
+    })
   }
 
   useEffect(() => {
@@ -90,7 +120,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   }, [sourceData])
 
   useEffect(() => {
-    console.log(JSON.stringify(finalData))
+    console.clear()
+    console.log(JSON.stringify(finalData, undefined, 2))
   }, [finalData])
 
   return (

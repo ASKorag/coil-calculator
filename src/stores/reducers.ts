@@ -42,7 +42,7 @@ export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}
   }
 }
 
-export const finalDataReducer = (state: TFinalData, {type, value, resist}: TFinalDataAction): TFinalData => {
+export const finalDataReducer = (state: TFinalData, {type, value, resist, params}: TFinalDataAction): TFinalData => {
   switch (type) {
     //Coil
     case TFinalDataActionTypes.CHANGE_HEIGHT:
@@ -58,6 +58,16 @@ export const finalDataReducer = (state: TFinalData, {type, value, resist}: TFina
       return resist ? {...state, resist: {...state.resist, withoutOverheat: resist}} : state
     case TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT:
       return resist ? {...state, resist: {...state.resist, withOverheat: resist}} : state
+    //Electric params with hold voltage
+    case TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE:
+      return params ? {...state, withHoldVoltage: {...state.withHoldVoltage, withoutOverheat: params}} : state
+    case TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_HOLD_VOLTAGE:
+      return params ? {...state, withHoldVoltage: {...state.withHoldVoltage, withOverheat: params}} : state
+    //Electric params with force voltage
+    case TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_FORCE_VOLTAGE:
+      return params ? {...state, withForceVoltage: {...state.withForceVoltage, withoutOverheat: params}} : state
+    case TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITH_OVERHEAT_FORCE_VOLTAGE:
+      return params ? {...state, withForceVoltage: {...state.withForceVoltage, withOverheat: params}} : state
     //Def
     default:
       return state
