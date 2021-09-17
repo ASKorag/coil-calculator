@@ -32,7 +32,7 @@ export const sourceDataReducer = (state: TSourceData, {type, wire, shape, value}
     case TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE:
       return value ? {...state, supply: {...state.supply, holdVoltage: value}} : state
     case TSourceDataActionTypes.CHANGE_VOLTAGE_DEV:
-      return value ? {...state, supply: {...state.supply, voltageDev: value}} : state
+      return value ? {...state, supply: {...state.supply, voltageDevPct: value}} : state
     //Temp
     case TSourceDataActionTypes.CHANGE_OVERHEAT:
       return value ? {...state, temp: {...state.temp, overheat: value}} : state

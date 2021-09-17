@@ -86,9 +86,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
 //Electric params
     const wireCSA = getCSA(wire.nomDiam, 1, 100, false)
     const electricParamsWithHoldVoltage = [
-      getElectricParams(supply.holdVoltage, supply.voltageDev, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.holdVoltage, supply.voltageDev, coil.turns, [...resistWithOverheat].reverse(), wireCSA)
+      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(), wireCSA)
     ]
     setFinalData({
       type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE,
@@ -100,9 +100,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     })
 
     const electricParamsWithForceVoltage = [
-      getElectricParams(supply.forceVoltage ?? 0, supply.voltageDev, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.forceVoltage ?? 0, supply.voltageDev, coil.turns, [...resistWithOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(),
         wireCSA)
     ]
     setFinalData({
@@ -202,7 +202,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
                  step="1"
                  max="100"
-                 value={supply.voltageDev}
+                 value={supply.voltageDevPct}
                  handler={handlerInput}/>
         </Group>
         <Group text="Температура" mod="temp">

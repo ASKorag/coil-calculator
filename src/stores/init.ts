@@ -23,7 +23,7 @@ export const initSourceData: TSourceData = {
     isForcing: false,
     holdVoltage: 200,
     forceVoltage: 250,
-    voltageDev: 10,
+    voltageDevPct: 10,
   },
   temp: {
     overheat: 80
