@@ -52,7 +52,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
       setSourceData({type: actionType})
     }
     if (type === 'number') {
+      console.log(`Value => ${value}`)
       const newValue = event.target.dataset.dim === '%' ? +value / 100 : +value
+      console.log(`New value => ${newValue}`)
       setSourceData({type: actionType, value: newValue})
     }
   }
@@ -127,20 +129,21 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   }, [sourceData])
 
   useEffect(() => {
-    console.clear()
+    // console.clear()
     console.log(JSON.stringify(finalData, undefined, 2))
+    console.log(JSON.stringify(sourceData, undefined, 2))
   }, [finalData])
 
   return (
     <div className="calc-page page">
       <div className="calc-page__wrap wrap">
-        <Group text="Провод" mod="wire">
+        <Group mod="wire">
           <Select text="Ном. диаметр, мм" mod="diam" name="diam" options={wiresNomDiam} handler={handlerSelect}
                   value={wire.nomDiam}/>
           <Select text="Изоляция" mod="isol" name="isol" options={wireMaxDiams}
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
-        <Group text="Катушка" mod="coil">
+        <Group mod="coil">
           <Select text="Форма"
                   mod="shape"
                   name="shape"
@@ -187,7 +190,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  dim="%"
           />
         </Group>
-        <Group text="Питание" mod="supply">
+        <Group mod="supply">
           <Field text="Напр. удержания, В"
                  id="hold-voltage"
                  action={TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE}
@@ -214,14 +217,17 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  dim="%"
                  handler={handlerInput}/>
         </Group>
-        <Group text="Температура" mod="temp">
+        <Group mod="temp">
           <Field text="Перегрев, °C"
                  id="overheat"
                  action={TSourceDataActionTypes.CHANGE_OVERHEAT}
                  value={temp.overheat}
                  handler={handlerInput}/>
         </Group>
-        <div className="result"></div>
+        <Group mod="result">
+
+        </Group>
+
       </div>
     </div>
   )

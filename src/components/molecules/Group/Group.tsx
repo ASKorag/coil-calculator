@@ -4,7 +4,7 @@ import {getFixClass} from '../../../utils/utils'
 
 import './Group.sass'
 
-export const Group: React.FC<TGroupProps> = ({children, text, mod}) => {
+export const Group: React.FC<TGroupProps> = ({children, mod}) => {
   const _ = getFixClass(mod)
   return (
     <div className={_('group')}>

@@ -47,7 +47,6 @@ export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 }
 
 export type TGroupProps = HTMLAttributes<HTMLDivElement> & {
-  text: string
   mod: string
 }
 
