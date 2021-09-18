@@ -1,4 +1,14 @@
 .checkbox
   display: flex
-  justify-content: space-between
+  flex-direction: row-reverse
+  justify-content: flex-end
   align-items: center
+  min-height: 22.5px
+
+  &__label
+    user-select: none
+
+    &:hover
+      cursor: pointer
+
+  &__input

@@ -19,6 +19,7 @@ export const Field: React.FC<TFieldProps> = ({text, id, step, max, action, dim, 
              data-action={action}
              hidden={hidden}
              data-dim={dim}
+             onFocus={e => e.target.select()}
       />
     </div>
   )

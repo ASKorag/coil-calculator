@@ -164,7 +164,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={coil.maxThick}
                  handler={handlerInput}
           />
-          <Field text={`Внутренний ${coil.shape === 'round' ? 'диаметр' : 'периметр'}, мм`}
+          <Field text={`Внутр. ${coil.shape === 'round' ? 'диаметр' : 'периметр'}, мм`}
                  id={`inner-${coil.shape === 'round' ? 'diam' : 'perim'}`}
                  action={TSourceDataActionTypes.CHANGE_INNER_LENGTH}
                  value={coil.innerLength}
@@ -188,24 +188,24 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
           />
         </Group>
         <Group text="Питание" mod="supply">
-          <Field text="Напряжение удержания, В"
+          <Field text="Напр. удержания, В"
                  id="hold-voltage"
                  action={TSourceDataActionTypes.CHANGE_HOLD_VOLTAGE}
                  value={supply.holdVoltage}
                  handler={handlerInput}/>
-          <Checkbox text="Форсировка?"
+          <Checkbox text="Есть форсировка?"
                     id="is-forcing"
                     action={TSourceDataActionTypes.TOGGLE_FORCING}
                     checked={supply.isForcing}
                     handler={handlerInput}/>
-          <Field text="Напряжение форсировки, В"
-                 id="force-voltage"
-                 action={TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE}
-                 value={supply.forceVoltage}
-                 handler={handlerInput}
-                 hidden={!supply.isForcing}
-          />
-          <Field text="Отклонение напряжения, %"
+          {supply.isForcing && <Field text="Напр. форсировки, В"
+                                      id="force-voltage"
+                                      action={TSourceDataActionTypes.CHANGE_FORCE_VOLTAGE}
+                                      value={supply.forceVoltage}
+                                      handler={handlerInput}
+
+          />}
+          <Field text="Отклонение напр., %"
                  id="voltage-dev"
                  action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
                  step="1"
@@ -221,6 +221,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={temp.overheat}
                  handler={handlerInput}/>
         </Group>
+        <div className="result"></div>
       </div>
     </div>
   )

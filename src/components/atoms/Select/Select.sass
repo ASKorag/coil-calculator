@@ -1,5 +1,17 @@
 .select
-  margin: 5px 0
   display: flex
+  flex-direction: column
   justify-content: space-between
-  align-items: center
+  min-height: 50px
+
+  &__label
+    user-select: none
+
+  &__list
+    border: none
+    border-radius: 22.5px
+    outline: none
+    min-height: 25px
+
+    &:hover
+      cursor: pointer

@@ -1,12 +1,25 @@
 .field
   display: flex
+  flex-direction: column
   justify-content: space-between
-  align-items: center
+  min-height: 50px
+  width: 200px
 
   &__label
+    user-select: none
 
     &:hover
       cursor: pointer
 
   &__input
-    width: 50px
+    box-sizing: border-box
+    border-radius: 12.5px
+    border: none
+    height: 25px
+    padding-left: 5px
+    outline: none
+    user-select: all
+
+    &::-webkit-outer-spin-button
+    &::-webkit-inner-spin-button
+      appearance: none

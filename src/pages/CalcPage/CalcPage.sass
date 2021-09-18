@@ -1,0 +1,29 @@
+@use '../../styles/variables' as var
+
+.calc-page
+
+  &__wrap
+    height: calc(100vh - 2 * #{var.$GAP})
+    width: calc(100vw - 2 * #{var.$GAP})
+    display: grid
+    grid-template-columns: 1fr 1fr 8fr
+    grid-template-rows: repeat(3, 1fr)
+    gap: var.$GAP
+    grid-template-areas: "wire coil calc" "supply coil calc" "temp coil calc"
+
+.group--wire
+  grid-area: wire
+
+.group--supply
+  grid-area: supply
+
+.group--coil
+  grid-area: coil
+
+.group--temp
+  grid-area: temp
+
+.result
+  grid-area: calc
+  background-color: green
+  height: 100%
