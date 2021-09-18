@@ -1,4 +1,4 @@
-import {TSourceData, TFinalData} from 'types/states'
+import {TFinalData, TSourceData} from 'types/states'
 import {TY_027} from '../wires/TY_027'
 
 const initWire = TY_027[0]
@@ -17,13 +17,13 @@ export const initSourceData: TSourceData = {
     maxThick: 16.5,
     innerLength: 200,
     turns: 1000,
-    fillPct: 85
+    fillFactor: 0.85
   },
   supply: {
     isForcing: false,
     holdVoltage: 200,
     forceVoltage: 250,
-    voltageDevPct: 10,
+    voltageDevFactor: 0.1,
   },
   temp: {
     overheat: 80
@@ -38,8 +38,8 @@ export const initFinalData: TFinalData = {
     weight: 0
   },
   resist: {
+    withoutOverheat: [0],
     withOverheat: [0],
-    withoutOverheat: [0]
   },
   withHoldVoltage: {
     withoutOverheat: {

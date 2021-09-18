@@ -1,8 +1,13 @@
-import React, {InputHTMLAttributes} from 'react'
-import {ButtonHTMLAttributes, HTMLAttributes, OptionHTMLAttributes, SelectHTMLAttributes} from 'react'
+import React, {
+  ButtonHTMLAttributes,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  OptionHTMLAttributes,
+  SelectHTMLAttributes
+} from 'react'
 import {TWiresBase} from './wires'
-import {TSourceData, TFinalData} from './states'
-import {TSourceDataAction, TFinalDataAction, TSourceDataActionTypes} from './actions'
+import {TFinalData, TSourceData} from './states'
+import {TFinalDataAction, TSourceDataAction, TSourceDataActionTypes} from './actions'
 
 export type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string,
@@ -37,6 +42,7 @@ export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   text: string,
   id: string,
   action: TSourceDataActionTypes,
+  dim?: string,
   handler: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 

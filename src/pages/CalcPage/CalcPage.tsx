@@ -48,12 +48,18 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   function handlerInput(event: React.ChangeEvent<HTMLInputElement>) {
     const actionType = event.target.dataset.action as TSourceDataActionTypes
     const {type, value} = event.target
-    type === 'checkbox' ? setSourceData({type: actionType}) : setSourceData({type: actionType, value: +value})
+    if (type === 'checkbox') {
+      setSourceData({type: actionType})
+    }
+    if (type === 'number') {
+      const newValue = event.target.dataset.dim === '%' ? +value / 100 : +value
+      setSourceData({type: actionType, value: newValue})
+    }
   }
 
   function calcFinalData() {
     //Coil
-    const coilFullCSA = getCSA(wire.maxDiam, coil.turns, coil.fillPct, true)
+    const coilFullCSA = getCSA(wire.maxDiam, coil.turns, coil.fillFactor, true)
     let newHeight, newThick
     if (coil.isFrame) {
       newHeight = coil.maxHeight
@@ -84,11 +90,12 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     })
     setFinalData({type: TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT, resist: resistWithOverheat})
 //Electric params
-    const wireCSA = getCSA(wire.nomDiam, 1, 100, false)
+    const wireCSA = getCSA(wire.nomDiam, 1, 1, false)
     const electricParamsWithHoldVoltage = [
-      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.holdVoltage, supply.voltageDevFactor, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(), wireCSA)
+      getElectricParams(supply.holdVoltage, supply.voltageDevFactor, coil.turns, [...resistWithOverheat].reverse(),
+        wireCSA)
     ]
     setFinalData({
       type: TFinalDataActionTypes.CHANGE_ELECTRIC_PARAMS_WITHOUT_OVERHEAT_HOLD_VOLTAGE,
@@ -100,9 +107,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     })
 
     const electricParamsWithForceVoltage = [
-      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevFactor, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevFactor, coil.turns, [...resistWithOverheat].reverse(),
         wireCSA)
     ]
     setFinalData({
@@ -134,13 +141,13 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                   handler={handlerSelect} value={wire.maxDiam}/>
         </Group>
         <Group text="Катушка" mod="coil">
-          <Select text="Форма катушки"
+          <Select text="Форма"
                   mod="shape"
                   name="shape"
                   options={[{value: 'round', text: 'Круглая'}, {value: 'random', text: 'Произвольная'}]}
                   handler={handlerSelect}
                   value={coil.shape}/>
-          <Checkbox text="Каркасная?"
+          <Checkbox text="Каркасная катушка?"
                     id="is-frame"
                     action={TSourceDataActionTypes.TOGGLE_COIL_TYPE}
                     checked={coil.isFrame}
@@ -175,8 +182,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_FILL_PCT}
                  step="1"
                  max="100"
-                 value={coil.fillPct}
+                 value={coil.fillFactor * 100}
                  handler={handlerInput}
+                 dim="%"
           />
         </Group>
         <Group text="Питание" mod="supply">
@@ -202,7 +210,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
                  step="1"
                  max="100"
-                 value={supply.voltageDevPct}
+                 value={supply.voltageDevFactor * 100}
+                 dim="%"
                  handler={handlerInput}/>
         </Group>
         <Group text="Температура" mod="temp">

@@ -10,11 +10,11 @@ export const getFixClass = (mod: string) => {
 export const getCSA = (
   diam: number,
   turns = 1,
-  fillPct = 100,
+  fillFactor = 1,
   bySquare = false
 ): number => {
   const csa = bySquare ? diam ** 2 : (Math.PI * diam ** 2) / 4
-  return 1 / fillPct * turns * csa * 100
+  return 1 / fillFactor * turns * csa
 }
 
 export const getAVGTurnLength = (innerLength: number, thick: number, lengthType: 'diameter' | 'perimeter'): number => {
@@ -24,8 +24,8 @@ export const getAVGTurnLength = (innerLength: number, thick: number, lengthType:
 
 export const getOverheatCoeff = (overheat: number): number => 1 + 4e-3 * overheat
 
-export const getRange = (value: number, devPct: number): number[] => {
-  const factors = [(1 - devPct / 100), 1, (1 + devPct / 100)]
+export const getRange = (value: number, devFactor: number): number[] => {
+  const factors = [(1 - devFactor), 1, (1 + devFactor)]
   return factors.map(factor => factor * value)
 
 }
