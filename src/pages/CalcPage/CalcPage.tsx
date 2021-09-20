@@ -48,20 +48,12 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   function handlerInput(event: React.ChangeEvent<HTMLInputElement>) {
     const actionType = event.target.dataset.action as TSourceDataActionTypes
     const {type, value} = event.target
-    if (type === 'checkbox') {
-      setSourceData({type: actionType})
-    }
-    if (type === 'number') {
-      console.log(`Value => ${value}`)
-      const newValue = event.target.dataset.dim === '%' ? +value / 100 : +value
-      console.log(`New value => ${newValue}`)
-      setSourceData({type: actionType, value: newValue})
-    }
+    type === 'checkbox' ? setSourceData({type: actionType}) : setSourceData({type: actionType, value: +value})
   }
 
   function calcFinalData() {
     //Coil
-    const coilFullCSA = getCSA(wire.maxDiam, coil.turns, coil.fillFactor, true)
+    const coilFullCSA = getCSA(wire.maxDiam, coil.turns, coil.fillPct, true)
     let newHeight, newThick
     if (coil.isFrame) {
       newHeight = coil.maxHeight
@@ -92,11 +84,11 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     })
     setFinalData({type: TFinalDataActionTypes.CHANGE_RESIST_WITH_OVERHEAT, resist: resistWithOverheat})
 //Electric params
-    const wireCSA = getCSA(wire.nomDiam, 1, 1, false)
+    const wireCSA = getCSA(wire.nomDiam, 1, 100, false)
     const electricParamsWithHoldVoltage = [
-      getElectricParams(supply.holdVoltage, supply.voltageDevFactor, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.holdVoltage, supply.voltageDevFactor, coil.turns, [...resistWithOverheat].reverse(),
+      getElectricParams(supply.holdVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(),
         wireCSA)
     ]
     setFinalData({
@@ -109,9 +101,9 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
     })
 
     const electricParamsWithForceVoltage = [
-      getElectricParams(supply.forceVoltage, supply.voltageDevFactor, coil.turns, [...resistWithoutOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithoutOverheat].reverse(),
         wireCSA),
-      getElectricParams(supply.forceVoltage, supply.voltageDevFactor, coil.turns, [...resistWithOverheat].reverse(),
+      getElectricParams(supply.forceVoltage, supply.voltageDevPct, coil.turns, [...resistWithOverheat].reverse(),
         wireCSA)
     ]
     setFinalData({
@@ -131,7 +123,6 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
   useEffect(() => {
     // console.clear()
     console.log(JSON.stringify(finalData, undefined, 2))
-    console.log(JSON.stringify(sourceData, undefined, 2))
   }, [finalData])
 
   return (
@@ -185,9 +176,8 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_FILL_PCT}
                  step="1"
                  max="100"
-                 value={coil.fillFactor * 100}
+                 value={coil.fillPct}
                  handler={handlerInput}
-                 dim="%"
           />
         </Group>
         <Group mod="supply">
@@ -213,8 +203,7 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  action={TSourceDataActionTypes.CHANGE_VOLTAGE_DEV}
                  step="1"
                  max="100"
-                 value={supply.voltageDevFactor * 100}
-                 dim="%"
+                 value={supply.voltageDevPct}
                  handler={handlerInput}/>
         </Group>
         <Group mod="temp">

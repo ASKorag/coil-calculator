@@ -14,14 +14,14 @@ export type TCoil = {
   maxThick: number,
   innerLength: number,
   turns: number,
-  fillFactor: number,
+  fillPct: number,
 }
 
 export type TSupply = {
   holdVoltage: number,
   isForcing: boolean,
   forceVoltage: number,
-  voltageDevFactor: number,
+  voltageDevPct: number,
 }
 
 export type TTemp = {

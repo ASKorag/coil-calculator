@@ -17,13 +17,13 @@ export const initSourceData: TSourceData = {
     maxThick: 16.5,
     innerLength: 200,
     turns: 1000,
-    fillFactor: 0.85
+    fillPct: 85
   },
   supply: {
     isForcing: false,
     holdVoltage: 200,
     forceVoltage: 250,
-    voltageDevFactor: 0.1,
+    voltageDevPct: 10,
   },
   temp: {
     overheat: 80

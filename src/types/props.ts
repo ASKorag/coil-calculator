@@ -42,7 +42,6 @@ export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   text: string,
   id: string,
   action: TSourceDataActionTypes,
-  dim?: string,
   handler: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 

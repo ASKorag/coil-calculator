@@ -10,11 +10,11 @@ export const getFixClass = (mod: string) => {
 export const getCSA = (
   diam: number,
   turns = 1,
-  fillFactor = 1,
+  fillPct = 100,
   bySquare = false
 ): number => {
   const csa = bySquare ? diam ** 2 : (Math.PI * diam ** 2) / 4
-  return 1 / fillFactor * turns * csa
+  return 100 / fillPct * turns * csa
 }
 
 export const getAVGTurnLength = (innerLength: number, thick: number, lengthType: 'diameter' | 'perimeter'): number => {
@@ -24,14 +24,14 @@ export const getAVGTurnLength = (innerLength: number, thick: number, lengthType:
 
 export const getOverheatCoeff = (overheat: number): number => 1 + 4e-3 * overheat
 
-export const getRange = (value: number, devFactor: number): number[] => {
-  const factors = [(1 - devFactor), 1, (1 + devFactor)]
+export const getRange = (value: number, devPct: number): number[] => {
+  const factors = [(1 - devPct / 100), 1, (1 + devPct / 100)]
   return factors.map(factor => factor * value)
 
 }
 
-export const getCurrent = (voltage: number, voltageDev: number, resist: TNumbArr): Array<TNumbArr> => {
-  return getRange(voltage, voltageDev).map(volt => {
+export const getCurrent = (voltage: number, voltageDevPct: number, resist: TNumbArr): Array<TNumbArr> => {
+  return getRange(voltage, voltageDevPct).map(volt => {
     return resist.map(res => res ? volt / res : null)
   })
 }
@@ -48,9 +48,9 @@ export const getCurrentDensity = (current: Array<TNumbArr>, wireCSA: number): Ar
   })
 }
 
-export const getElectricParams = (voltage: number, voltageDev: number, turns: number, resist: TNumbArr,
-  wireCSA: number): TElectricParam => {
-  const current = getCurrent(voltage, voltageDev, resist)
+export const getElectricParams = (voltage: number, voltageDevPct: number, turns: number, resist: TNumbArr,
+                                  wireCSA: number): TElectricParam => {
+  const current = getCurrent(voltage, voltageDevPct, resist)
   const mmf = getMMF(current, turns)
   const currentDensity = getCurrentDensity(current, wireCSA)
   return {current, mmf, currentDensity}
