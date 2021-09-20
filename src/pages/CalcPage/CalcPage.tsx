@@ -9,6 +9,7 @@ import {Group} from '../../components/molecules/Group/Group'
 import {Checkbox} from '../../components/atoms/Checkbox/Checkbox'
 import {TFinalDataActionTypes, TSourceDataActionTypes} from 'types/actions'
 import {getAVGTurnLength, getCSA, getElectricParams, getOverheatCoeff} from '../../utils/utils'
+import {ResultTable} from '../../components/sections/ResultTable/ResultTable'
 
 export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers}) => {
   const {sourceData, finalData} = states
@@ -213,9 +214,10 @@ export const CalcPage: React.FC<TCalcPageProps> = ({wires, states, dispatchers})
                  value={temp.overheat}
                  handler={handlerInput}/>
         </Group>
-        <Group mod="result">
+        <ResultTable finalData={finalData} isForcing={sourceData.supply.isForcing} />
+        {/*<Group mod="result">*/}
 
-        </Group>
+        {/*</Group>*/}
 
       </div>
     </div>

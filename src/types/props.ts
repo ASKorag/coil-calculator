@@ -38,6 +38,11 @@ export type TCalcPageProps = HTMLAttributes<HTMLDivElement> & {
   }
 }
 
+export type TResultTableProps = HTMLAttributes<HTMLTableElement> & {
+  finalData: TFinalData,
+  isForcing: boolean
+}
+
 export type TFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   text: string,
   id: string,
